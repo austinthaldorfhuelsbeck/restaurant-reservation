@@ -1,6 +1,8 @@
 import axios from "axios"
 import { useState } from "react"
 import { useHistory } from "react-router-dom"
+import ErrorAlert from "../layout/ErrorAlert"
+// TODO: environment variables
 const BASE_API_URL = "http://localhost:5000" // "https://restaurant-reservation-api.vercel.app"
 
 export default function NewReservation() {
@@ -14,6 +16,7 @@ export default function NewReservation() {
   }
   const history = useHistory()
   const [formData, setFormData] = useState({ ...initialFormState })
+  const [reservationsError, setReservationsError] = useState(null)
 
   // HANDLERS
   const handleChange = ({ target }) => {
@@ -26,95 +29,104 @@ export default function NewReservation() {
     e.preventDefault()
     axios
       .post(`${BASE_API_URL}/reservations`, formData)
-      // .then(console.log)
-      .then(history.push(`/dashboard?date=${formData.reservation_date}`))
-      .catch((err) => console.error(err))
+      .then(console.log)
+      // .then(history.push(`/dashboard?date=${formData.reservation_date}`))
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+          setReservationsError(error.response.json())
+        }
+      });
   }
   const handleCancel = () => {
     history.goBack()
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="form-group">
-        <label htmlFor="first_name">First Name</label>
-        <input
-          type="text"
-          className="form-control"
-          id="first_name"
-          placeholder="Customer's first name here"
-          onChange={handleChange}
-          value={formData.first_name}
-          required
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="last_name">Last Name</label>
-        <input
-          type="text"
-          className="form-control"
-          id="last_name"
-          placeholder="Customer's last name here"
-          onChange={handleChange}
-          value={formData.last_name}
-          required
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="mobile_number">Mobile Number</label>
-        <input
-          type="tel"
-          className="form-control"
-          id="mobile_number"
-          placeholder="E.g. 541 444 0755"
-          onChange={handleChange}
-          value={formData.mobile_number}
-          required
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="reservation_date">Reservation Date</label>
-        <input
-          type="date"
-          placeholder="YYYY-MM-DD"
-          pattern="\d{4}-\d{2}-\d{2}"
-          className="form-control"
-          id="reservation_date"
-          onChange={handleChange}
-          value={formData.reservation_date}
-          required
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="reservation_time">Reservation Time</label>
-        <input
-          type="time"
-          placeholder="HH:MM"
-          pattern="[0-9]{2}:[0-9]{2}"
-          className="form-control"
-          id="reservation_time"
-          onChange={handleChange}
-          value={formData.reservation_time}
-          required
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="people">Party Size</label>
-        <input
-          type="text"
-          className="form-control"
-          id="people"
-          onChange={handleChange}
-          value={formData.people}
-          required
-        />
-      </div>
-      <button type="submit" className="btn btn-outline-primary">
-        Submit
-      </button>
-      <button onClick={handleCancel} className="btn btn-outline-primary">
-        Cancel
-      </button>
-    </form>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="first_name">First Name</label>
+          <input
+            type="text"
+            className="form-control"
+            id="first_name"
+            placeholder="Customer's first name here"
+            onChange={handleChange}
+            value={formData.first_name}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="last_name">Last Name</label>
+          <input
+            type="text"
+            className="form-control"
+            id="last_name"
+            placeholder="Customer's last name here"
+            onChange={handleChange}
+            value={formData.last_name}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="mobile_number">Mobile Number</label>
+          <input
+            type="tel"
+            className="form-control"
+            id="mobile_number"
+            placeholder="E.g. 541 444 0755"
+            onChange={handleChange}
+            value={formData.mobile_number}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="reservation_date">Reservation Date</label>
+          <input
+            type="date"
+            placeholder="YYYY-MM-DD"
+            pattern="\d{4}-\d{2}-\d{2}"
+            className="form-control"
+            id="reservation_date"
+            onChange={handleChange}
+            value={formData.reservation_date}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="reservation_time">Reservation Time</label>
+          <input
+            type="time"
+            placeholder="HH:MM"
+            pattern="[0-9]{2}:[0-9]{2}"
+            className="form-control"
+            id="reservation_time"
+            onChange={handleChange}
+            value={formData.reservation_time}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="people">Party Size</label>
+          <input
+            type="text"
+            className="form-control"
+            id="people"
+            onChange={handleChange}
+            value={formData.people}
+            required
+          />
+        </div>
+        <button type="submit" className="btn btn-outline-primary">
+          Submit
+        </button>
+        <button onClick={handleCancel} className="btn btn-outline-primary">
+          Cancel
+        </button>
+      </form>
+      <ErrorAlert error={reservationsError} />
+    </div>
+    
   )
 }

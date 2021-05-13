@@ -27,6 +27,31 @@ function isValidReservation(req, res, next) {
   res.locals.reservation = reservation
   return next()
 }
+function isTuesday(req, res, next) {
+  const reqDate = res.locals.reservation.reservation_date
+  const date = new Date(reqDate)
+  // console.log("Date: ", date)
+  const dateString = date.toDateString()
+  // TODO: FIX One day behind for some reason??
+  // console.log("Date string: ", dateString)
+  if (dateString.includes("Mon")) {
+    return next({ status: 400, message: "Restaurant is closed on Tuesdays." })
+  }
+  return next()
+}
+function isFuture(req, res, next) {
+  const reqDate = res.locals.reservation.reservation_date
+  const date = new Date(reqDate)
+  // console.log("Date: ", date)
+  const today = new Date()
+  // console.log("Today: ", today)
+  const dateTime = date.getTime()
+  const todayTime = today.getTime()
+  if (dateTime < todayTime) {
+    return next({ status: 400, message: "Reservation date must not be in the past." })
+  }
+  return next()
+}
 
 /**
  * Handlers for reservation resources
@@ -45,5 +70,10 @@ async function create(req, res) {
 
 module.exports = {
   list: [asyncErrorBoundary(list)],
-  create: [asyncErrorBoundary(isValidReservation), create],
+  create: [
+    asyncErrorBoundary(isValidReservation),
+    isTuesday,
+    isFuture,
+    create
+  ],
 }
