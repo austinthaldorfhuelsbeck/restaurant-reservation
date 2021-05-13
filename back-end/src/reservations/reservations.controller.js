@@ -41,14 +41,17 @@ function isTuesday(req, res, next) {
 }
 function isFuture(req, res, next) {
   const reqDate = res.locals.reservation.reservation_date
+  // Compare request's getTime to today's
+  // Subtracts 24hrs from today result because request will be at 12:00AM
   const date = new Date(reqDate)
-  // console.log("Date: ", date)
   const today = new Date()
-  // console.log("Today: ", today)
   const dateTime = date.getTime()
-  const todayTime = today.getTime()
+  const todayTime = today.getTime() - 86400000
   if (dateTime < todayTime) {
-    return next({ status: 400, message: "Reservation date must not be in the past." })
+    return next({
+      status: 400,
+      message: "Reservation date must not be in the past.",
+    })
   }
   return next()
 }
@@ -70,10 +73,5 @@ async function create(req, res) {
 
 module.exports = {
   list: [asyncErrorBoundary(list)],
-  create: [
-    asyncErrorBoundary(isValidReservation),
-    isTuesday,
-    isFuture,
-    create
-  ],
+  create: [asyncErrorBoundary(isValidReservation), isTuesday, isFuture, create],
 }

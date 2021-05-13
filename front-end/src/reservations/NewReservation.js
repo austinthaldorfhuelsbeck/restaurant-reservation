@@ -25,18 +25,15 @@ export default function NewReservation() {
       [target.id]: target.value,
     })
   }
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    axios
-      .post(`${BASE_API_URL}/reservations`, formData)
-      .then(console.log)
-      // .then(history.push(`/dashboard?date=${formData.reservation_date}`))
-      .catch((error) => {
-        if (error.response) {
-          console.log(error.response);
-          setReservationsError(error.response.json())
-        }
-      });
+    try {
+      await axios.post(`${BASE_API_URL}/reservations`, formData)
+      history.push(`/dashboard?date=${formData.reservation_date}`)
+    } catch (err) {
+      // console.log(err.response.data)
+      setReservationsError(err.response.data)
+    }
   }
   const handleCancel = () => {
     history.goBack()
@@ -127,6 +124,5 @@ export default function NewReservation() {
       </form>
       <ErrorAlert error={reservationsError} />
     </div>
-    
   )
 }
