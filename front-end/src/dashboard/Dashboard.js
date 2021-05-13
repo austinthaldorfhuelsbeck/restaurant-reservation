@@ -4,7 +4,7 @@ import ErrorAlert from "../layout/ErrorAlert"
 import DashboardNav from "./DashboardNav"
 
 /**
- * Defines the dashboard page.
+ *  Defines the dashboard page.
  * @param date
  *  the date for which the user wants to view reservations.
  * @returns {JSX.Element}
