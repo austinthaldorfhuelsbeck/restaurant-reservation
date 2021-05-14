@@ -24,10 +24,12 @@ export default function NewTable() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      await axios.post(`${BASE_API_URL}/tables`, formData)
+      await axios.post(`${BASE_API_URL}/tables/new`, formData)
       history.push("/dashboard")
     } catch (err) {
-      setReservationsError(err.response.data)
+      if (err.response) {
+        setReservationsError(err.response.data)
+      }
     }
   }
   const handleCancel = () => {
@@ -43,18 +45,17 @@ export default function NewTable() {
             type="text"
             className="form-control"
             id="table_name"
-            placeholder="Each reservation must include a name to announce"
+            placeholder="Name of the table"
             onChange={handleChange}
             value={formData.table_name}
           />
         </div>
         <div className="form-group">
-          <label htmlFor="capacity"></label>
+          <label htmlFor="capacity">Capacity</label>
           <input
             type="number"
             className="form-control"
             id="capacity"
-            placeholder="# of people at table"
             onChange={handleChange}
             value={formData.capacity}
           />
