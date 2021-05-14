@@ -39,17 +39,29 @@ function isTuesday(req, res, next) {
   }
   return next()
 }
-function isFuture(req, res, next) {
+function isValidTime(req, res, next) {
   const reqDate = res.locals.reservation.reservation_date
   const reqTime = res.locals.reservation.reservation_time
 
   // Compare request's getTime to today's using numerical values
-  const dateTime = reqDate + " " + reqTime
+  const dateTime = Date.parse(reqDate + " " + reqTime)
   const now = new Date().getTime()
-  if (Date.parse(dateTime) < now) {
+
+  const hours = Number(reqTime.slice(0, 2))
+  const minutes = Number(reqTime.slice(3))
+  const timeNum = hours * 60 + minutes
+  console.log(timeNum)
+
+  if (dateTime < now) {
     return next({
       status: 400,
       message: "Reservation date must not be in the past.",
+    })
+  }
+  if (timeNum < 630 || timeNum > 1290) {
+    return next({
+      status: 400,
+      message: "Restaurant is closed at the requested time.",
     })
   }
   return next()
@@ -72,5 +84,10 @@ async function create(req, res) {
 
 module.exports = {
   list: [asyncErrorBoundary(list)],
-  create: [asyncErrorBoundary(isValidReservation), isTuesday, isFuture, create],
+  create: [
+    asyncErrorBoundary(isValidReservation),
+    isTuesday,
+    isValidTime,
+    create,
+  ],
 }
