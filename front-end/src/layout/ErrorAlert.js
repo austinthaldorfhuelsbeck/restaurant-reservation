@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 
 /**
  * Defines the alert message to render if the specified error is truthy.
@@ -8,12 +8,12 @@ import React from "react";
  *  a bootstrap danger alert that contains the message string.
  */
 
+// TODO: Return multiple errors
+
 function ErrorAlert({ error }) {
   return (
-    error && (
-      <div className="alert alert-danger m-2">Error: {error.message}</div>
-    )
-  );
+    error && <div className="alert alert-danger m-2">Error: {error.error}</div>
+  )
 }
 
-export default ErrorAlert;
+export default ErrorAlert

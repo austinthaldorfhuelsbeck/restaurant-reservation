@@ -25,18 +25,14 @@ export default function NewReservation() {
       [target.id]: target.value,
     })
   }
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    axios
-      .post(`${BASE_API_URL}/reservations`, formData)
-      .then(console.log)
-      // .then(history.push(`/dashboard?date=${formData.reservation_date}`))
-      .catch((error) => {
-        if (error.response) {
-          console.log(error.response);
-          setReservationsError(error.response.json())
-        }
-      });
+    try {
+      await axios.post(`${BASE_API_URL}/reservations`, formData)
+      history.push(`/dashboard?date=${formData.reservation_date}`)
+    } catch (err) {
+      setReservationsError(err.response.data)
+    }
   }
   const handleCancel = () => {
     history.goBack()
@@ -54,7 +50,6 @@ export default function NewReservation() {
             placeholder="Customer's first name here"
             onChange={handleChange}
             value={formData.first_name}
-            required
           />
         </div>
         <div className="form-group">
@@ -66,7 +61,6 @@ export default function NewReservation() {
             placeholder="Customer's last name here"
             onChange={handleChange}
             value={formData.last_name}
-            required
           />
         </div>
         <div className="form-group">
@@ -78,7 +72,6 @@ export default function NewReservation() {
             placeholder="E.g. 541 444 0755"
             onChange={handleChange}
             value={formData.mobile_number}
-            required
           />
         </div>
         <div className="form-group">
@@ -91,7 +84,6 @@ export default function NewReservation() {
             id="reservation_date"
             onChange={handleChange}
             value={formData.reservation_date}
-            required
           />
         </div>
         <div className="form-group">
@@ -104,7 +96,6 @@ export default function NewReservation() {
             id="reservation_time"
             onChange={handleChange}
             value={formData.reservation_time}
-            required
           />
         </div>
         <div className="form-group">
@@ -115,7 +106,6 @@ export default function NewReservation() {
             id="people"
             onChange={handleChange}
             value={formData.people}
-            required
           />
         </div>
         <button type="submit" className="btn btn-outline-primary">
@@ -127,6 +117,5 @@ export default function NewReservation() {
       </form>
       <ErrorAlert error={reservationsError} />
     </div>
-    
   )
 }
