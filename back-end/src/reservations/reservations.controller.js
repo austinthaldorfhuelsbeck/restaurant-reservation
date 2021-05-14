@@ -41,13 +41,12 @@ function isTuesday(req, res, next) {
 }
 function isFuture(req, res, next) {
   const reqDate = res.locals.reservation.reservation_date
-  // Compare request's getTime to today's
-  // Subtracts 24hrs from today result because request will be at 12:00AM
-  const date = new Date(reqDate)
-  const today = new Date()
-  const dateTime = date.getTime()
-  const todayTime = today.getTime() - 86400000
-  if (dateTime < todayTime) {
+  const reqTime = res.locals.reservation.reservation_time
+
+  // Compare request's getTime to today's using numerical values
+  const dateTime = reqDate + " " + reqTime
+  const now = new Date().getTime()
+  if (Date.parse(dateTime) < now) {
     return next({
       status: 400,
       message: "Reservation date must not be in the past.",

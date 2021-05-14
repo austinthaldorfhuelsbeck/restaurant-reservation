@@ -31,7 +31,6 @@ export default function NewReservation() {
       await axios.post(`${BASE_API_URL}/reservations`, formData)
       history.push(`/dashboard?date=${formData.reservation_date}`)
     } catch (err) {
-      // console.log(err.response.data)
       setReservationsError(err.response.data)
     }
   }
@@ -51,7 +50,6 @@ export default function NewReservation() {
             placeholder="Customer's first name here"
             onChange={handleChange}
             value={formData.first_name}
-            required
           />
         </div>
         <div className="form-group">
@@ -63,7 +61,6 @@ export default function NewReservation() {
             placeholder="Customer's last name here"
             onChange={handleChange}
             value={formData.last_name}
-            required
           />
         </div>
         <div className="form-group">
@@ -75,7 +72,6 @@ export default function NewReservation() {
             placeholder="E.g. 541 444 0755"
             onChange={handleChange}
             value={formData.mobile_number}
-            required
           />
         </div>
         <div className="form-group">
@@ -88,7 +84,6 @@ export default function NewReservation() {
             id="reservation_date"
             onChange={handleChange}
             value={formData.reservation_date}
-            required
           />
         </div>
         <div className="form-group">
@@ -101,7 +96,6 @@ export default function NewReservation() {
             id="reservation_time"
             onChange={handleChange}
             value={formData.reservation_time}
-            required
           />
         </div>
         <div className="form-group">
@@ -112,7 +106,6 @@ export default function NewReservation() {
             id="people"
             onChange={handleChange}
             value={formData.people}
-            required
           />
         </div>
         <button type="submit" className="btn btn-outline-primary">
