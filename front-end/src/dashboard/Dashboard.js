@@ -1,5 +1,9 @@
+import axios from "axios"
 import React, { useEffect, useState } from "react"
-import { listReservations } from "../utils/api"
+import { listReservations, listTables } from "../utils/api"
+
+import Reservation from "./Components/Reservation"
+import Table from "./Components/Table"
 import ErrorAlert from "../layout/ErrorAlert"
 import DashboardNav from "./DashboardNav"
 
@@ -12,39 +16,52 @@ import DashboardNav from "./DashboardNav"
 export default function Dashboard({ date }) {
   const [reservations, setReservations] = useState([])
   const [reservationsError, setReservationsError] = useState(null)
+  const [tables, setTables] = useState([])
+  const [tablesError, setTablesError] = useState(null)
 
   useEffect(loadDashboard, [date])
 
   function loadDashboard() {
     const abortController = new AbortController()
-    // console.log("Date: ", date)
+
     setReservationsError(null)
     listReservations({ date }, abortController.signal)
       .then(setReservations)
-      .then(console.log)
       .catch(setReservationsError)
+    listTables(abortController.signal).then(setTables).catch(setTablesError)
+
     return () => abortController.abort()
   }
 
   const reservationsList = reservations.map((reservation, index) => (
     <div key={index}>
-      <h2>
-        {reservation.first_name} {reservation.last_name}
-      </h2>
-      <h3>{reservation.reservation_time}</h3>
-      Party Size: {reservation.people}
+      <Reservation reservation={reservation} />
+    </div>
+  ))
+
+  const tablesList = tables.map((table, index) => (
+    <div key={index}>
+      <Table table={table} />
     </div>
   ))
 
   return (
     <main>
       <h1>Dashboard</h1>
-      <div className="d-md-flex mb-3">
-        <h4 className="mb-0">Reservations for date: {date}</h4>
+      <div className="container">
+        <h3>Date: {date}</h3>
+        <h4>Reservations:</h4>
+        <div className="col col-md-6 py-3">
+          <ErrorAlert error={reservationsError} />
+          {reservationsList}
+        </div>
+        <h4>Tables:</h4>
+        <div className="col col-md-6 py-3">
+          <ErrorAlert error={tablesError} />
+          {tablesList}
+        </div>
+        <DashboardNav date={date} />
       </div>
-      <ErrorAlert error={reservationsError} />
-      {reservationsList}
-      <DashboardNav date={date} />
     </main>
   )
 }
