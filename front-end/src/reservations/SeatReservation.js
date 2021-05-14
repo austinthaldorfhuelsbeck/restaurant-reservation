@@ -36,7 +36,7 @@ export default function SeatReservation() {
     e.preventDefault()
     const req = { data: { reservation_id } }
     try {
-      await axios.post(`${BASE_API_URL}/tables/${formData.table_id}/seat`, req)
+      await axios.put(`${BASE_API_URL}/tables/${formData.table_id}/seat`, req)
       history.push("/dashboard")
     } catch (err) {
       if (err.response) {
