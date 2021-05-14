@@ -78,7 +78,7 @@ async function list(req, res) {
 }
 async function create(req, res) {
   const reservation = res.locals.reservation
-  console.log(reservation)
+  // console.log(reservation)
   const data = await service.create(reservation)
   res.json({ data })
 }

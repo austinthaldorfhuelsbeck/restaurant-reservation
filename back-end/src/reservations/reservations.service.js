@@ -13,6 +13,10 @@ function listDate(date) {
     .where({ "r.reservation_date": date })
 }
 
+/**
+ * Create service for reservation resources
+ * Create returns a list, of which we only need the first element
+ */
 function create(reservation) {
   return knex("reservations")
     .insert(reservation)
