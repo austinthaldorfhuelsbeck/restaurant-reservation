@@ -1,21 +1,20 @@
 import React from "react"
 
-import { Redirect, Route, Switch, useLocation } from "react-router-dom"
+import { Redirect, Route, Switch } from "react-router-dom"
+
 import Dashboard from "../dashboard/Dashboard"
 import NewReservation from "../reservations/NewReservation"
+import NewTable from "../tables/NewTable"
 import NotFound from "./NotFound"
+
 import { today } from "../utils/date-time"
+import useQuery from "../utils/useQuery"
 
 /**
  * Defines all the routes for the application.
  *
  * @returns {JSX.Element}
  */
-
-// Custom hook to retrieve the route query as a string
-function useQuery() {
-  return new URLSearchParams(useLocation().search)
-}
 
 export default function Routes() {
   const query = useQuery()
@@ -24,10 +23,10 @@ export default function Routes() {
 
   return (
     <Switch>
-      <Route exact={true} path="/">
+      <Route exact path="/">
         <Redirect to={"/dashboard"} />
       </Route>
-      <Route exact={true} path="/reservations">
+      <Route exact path="/reservations">
         <Redirect to={"/dashboard"} />
       </Route>
       <Route path="/dashboard">
@@ -35,6 +34,9 @@ export default function Routes() {
       </Route>
       <Route path="/reservations/new">
         <NewReservation />
+      </Route>
+      <Route path="/tables/new">
+        <NewTable />
       </Route>
       <Route>
         <NotFound />
