@@ -46,24 +46,25 @@ function isValidTime(req, res, next) {
   // Compare request's getTime to today's using numerical values
   const dateTime = Date.parse(reqDate + " " + reqTime)
   const now = new Date().getTime()
-
-  const hours = Number(reqTime.slice(0, 2))
-  const minutes = Number(reqTime.slice(3))
-  const timeNum = hours * 60 + minutes
-  console.log(timeNum)
-
   if (dateTime < now) {
     return next({
       status: 400,
       message: "Reservation date must not be in the past.",
     })
   }
+
+  // Compare request's time to restaurant's hours
+  const hours = Number(reqTime.slice(0, 2))
+  const minutes = Number(reqTime.slice(3))
+  const timeNum = hours * 60 + minutes
+  // 630 = 10:30AM 1290 = 9:30PM
   if (timeNum < 630 || timeNum > 1290) {
     return next({
       status: 400,
       message: "Restaurant is closed at the requested time.",
     })
   }
+
   return next()
 }
 
