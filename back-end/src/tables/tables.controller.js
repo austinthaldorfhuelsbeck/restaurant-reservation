@@ -4,7 +4,23 @@ const asyncErrorBoundary = require("../errors/asyncErrorBoundary")
 /**
  * Validation
  */
-function isValidTable(req, res, next) {}
+function isValidTable(req, res, next) {
+  const table = { ...req.body }
+  if (table.table_name.length < 2) {
+    return next({
+      status: 400,
+      message: "Table name must be at least two characters.",
+    })
+  }
+  if (table.capacity < 1) {
+    return next({
+      status: 400,
+      message: "Capacity must be at least one.",
+    })
+  }
+  res.locals.table = table
+  return next()
+}
 
 /**
  * Handlers for table & seat resources

@@ -49,7 +49,7 @@ export default function NewTable() {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="capacity"></label>
+          <label htmlFor="capacity">Capacity</label>
           <input
             type="number"
             className="form-control"
