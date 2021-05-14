@@ -31,7 +31,9 @@ export default function NewReservation() {
       await axios.post(`${BASE_API_URL}/reservations`, formData)
       history.push(`/dashboard?date=${formData.reservation_date}`)
     } catch (err) {
-      setReservationsError(err.response.data)
+      if (err.response) {
+        setReservationsError(err.response.data)
+      }
     }
   }
   const handleCancel = () => {

@@ -45,7 +45,7 @@ export default function NewTable() {
             type="text"
             className="form-control"
             id="table_name"
-            placeholder="Each reservation must include a name to announce"
+            placeholder="Name of the table"
             onChange={handleChange}
             value={formData.table_name}
           />
@@ -56,7 +56,6 @@ export default function NewTable() {
             type="number"
             className="form-control"
             id="capacity"
-            placeholder="# of people at table"
             onChange={handleChange}
             value={formData.capacity}
           />

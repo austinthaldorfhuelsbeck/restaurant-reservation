@@ -1,4 +1,3 @@
-import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { listReservations, listTables } from "../utils/api"
 
@@ -23,8 +22,8 @@ export default function Dashboard({ date }) {
 
   function loadDashboard() {
     const abortController = new AbortController()
-
     setReservationsError(null)
+
     listReservations({ date }, abortController.signal)
       .then(setReservations)
       .catch(setReservationsError)
