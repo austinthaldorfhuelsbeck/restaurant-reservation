@@ -24,10 +24,12 @@ export default function NewTable() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      await axios.post(`${BASE_API_URL}/tables`, formData)
+      await axios.post(`${BASE_API_URL}/tables/new`, formData)
       history.push("/dashboard")
     } catch (err) {
-      setReservationsError(err.response.data)
+      if (err.response) {
+        setReservationsError(err.response.data)
+      }
     }
   }
   const handleCancel = () => {
