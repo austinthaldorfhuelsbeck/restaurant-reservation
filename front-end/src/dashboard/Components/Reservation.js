@@ -9,6 +9,7 @@ export default function Reservation({ reservation }) {
           {reservation.reservation_time}
         </h6>
         <p className="card-text">Party Size: {reservation.people}</p>
+        <p className="card-text">Reservation #: {reservation.reservation_id}</p>
         <a
           href={`/reservations/${reservation.reservation_id}/seat`}
           className="btn btn-outline-primary"

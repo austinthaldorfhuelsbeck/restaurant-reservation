@@ -1,4 +1,5 @@
 const service = require("./tables.service")
+const reservationService = require("../reservations/reservations.service")
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary")
 
 /**
@@ -31,6 +32,22 @@ async function tableExists(req, res, next) {
   }
   next({ status: 404, message: "Table cannot be found." })
 }
+function isAvailable(req, res, next) {
+  const { table } = res.locals
+  if (table.reservation_id === null) {
+    return next()
+  }
+  next({ status: 400, message: "Table is already occupied." })
+}
+async function isLargeEnough(req, res, next) {
+  const { table } = res.locals
+  const id = req.body.data.reservation_id
+  const reservation = await reservationService.read(id)
+  if (reservation[0].people < table.capacity) {
+    return next()
+  }
+  next({ status: 400, message: "Table is not large enough for party size." })
+}
 
 /**
  * Handlers for table & seat resources
@@ -51,15 +68,20 @@ function read(req, res) {
 async function update(req, res) {
   const { table } = res.locals
   const { reservation_id } = req.body.data
-  const updatedTable = { ...table, ...reservation_id }
+  table.reservation_id = reservation_id
   const id = table.table_id
-  const data = await service.update(updatedTable, id)
+  const data = await service.update(table, id)
   res.json({ data })
 }
 
 module.exports = {
   list: [asyncErrorBoundary(list)],
   create: [asyncErrorBoundary(isValidTable), create],
-  read,
-  update: [asyncErrorBoundary(tableExists), update],
+  read: [asyncErrorBoundary(tableExists), read],
+  update: [
+    asyncErrorBoundary(tableExists),
+    isAvailable,
+    asyncErrorBoundary(isLargeEnough),
+    update,
+  ],
 }

@@ -1,4 +1,12 @@
 export default function Table({ table }) {
+  const isOccupied = table.reservation_id
+    ? `Occupied - reservation #${table.reservation_id}`
+    : "Free"
+
+  const handleClick = () => {
+    // TODO
+  }
+
   return (
     <div className="card">
       <div className="card-body">
@@ -7,8 +15,17 @@ export default function Table({ table }) {
           Capacity: {table.capacity}
         </h6>
         <p className="card-text" data-table-id-status={table.table_id}>
-          Free : Occupied
+          {isOccupied}
         </p>
+        {table.reservation_id && (
+          <button
+            onClick={handleClick}
+            data-table-id-finish={table.table_id}
+            className="btn btn-outline-primary"
+          >
+            Finish
+          </button>
+        )}
       </div>
     </div>
   )

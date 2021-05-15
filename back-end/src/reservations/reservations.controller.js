@@ -4,6 +4,15 @@ const asyncErrorBoundary = require("../errors/asyncErrorBoundary")
 /**
  * Validation
  */
+async function reservationExists(req, res, next) {
+  const reservationsList = await service.read(req.params.reservation_id)
+  const reservation = reservationsList[0]
+  if (reservation) {
+    res.locals.reservation = reservation
+    return next()
+  }
+  next({ status: 404, message: "Reservation cannot be found." })
+}
 function isValidReservation(req, res, next) {
   const reservation = { ...req.body }
   if (!reservation.first_name) {
@@ -82,6 +91,10 @@ async function create(req, res) {
   const data = await service.create(reservation)
   res.json({ data })
 }
+function read(req, res) {
+  const data = res.locals.reservation
+  res.json({ data })
+}
 
 module.exports = {
   list: [asyncErrorBoundary(list)],
@@ -91,4 +104,5 @@ module.exports = {
     isValidTime,
     create,
   ],
+  read: [asyncErrorBoundary(reservationExists), read],
 }
