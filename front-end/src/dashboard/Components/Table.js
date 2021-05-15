@@ -1,15 +1,16 @@
 import axios from "axios"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import ErrorAlert from "../../layout/ErrorAlert"
 // TODO: environment variables
 const BASE_API_URL = "http://localhost:5000" // "https://restaurant-reservation-api.vercel.app"
 
 export default function Table({ table }) {
+  const [isOccupied, setIsOccupied] = useState(false)
   const [deleteError, setDeleteError] = useState(null)
 
-  const isOccupied = table.reservation_id
-    ? `Occupied - reservation #${table.reservation_id}`
-    : "Free"
+  useEffect(() => {
+    setIsOccupied(table.reservation_id && true)
+  }, [table])
 
   const handleClick = async () => {
     if (
@@ -18,7 +19,8 @@ export default function Table({ table }) {
       )
     ) {
       try {
-        await axios.delete(`${BASE_API_URL}/${table.table_id}/seat`)
+        await axios.delete(`${BASE_API_URL}/tables/${table.table_id}/seat`)
+        setIsOccupied(false)
       } catch (err) {
         if (err.response) {
           setDeleteError(err.response.data)
@@ -35,9 +37,11 @@ export default function Table({ table }) {
           Capacity: {table.capacity}
         </h6>
         <p className="card-text" data-table-id-status={table.table_id}>
-          {isOccupied}
+          {isOccupied
+            ? `Occupied - reservation #${table.reservation_id}`
+            : "Free"}
         </p>
-        {table.reservation_id && (
+        {isOccupied && (
           <button
             onClick={handleClick}
             data-table-id-finish={table.table_id}

@@ -1,6 +1,7 @@
 const service = require("./tables.service")
 const reservationService = require("../reservations/reservations.service")
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary")
+const { destroy } = require("../db/connection")
 
 /**
  * Validation
@@ -65,12 +66,17 @@ function read(req, res) {
   const { table } = res.locals
   res.json({ data: table })
 }
-async function update(req, res) {
+async function updateTableAssignment(req, res) {
   const { table } = res.locals
   const { reservation_id } = req.body.data
   table.reservation_id = reservation_id
-  const id = table.table_id
-  const data = await service.update(table, id)
+  const data = await service.update(table, table.table_id)
+  res.json({ data })
+}
+async function destroyTableAssignment(req, res) {
+  const { table } = res.locals
+  table.reservation_id = null
+  const data = await service.update(table, table.table_id)
   res.json({ data })
 }
 
@@ -81,7 +87,8 @@ module.exports = {
   update: [
     asyncErrorBoundary(tableExists),
     isAvailable,
-    asyncErrorBoundary(isLargeEnough),
-    update,
+    isLargeEnough,
+    updateTableAssignment,
   ],
+  delete: [asyncErrorBoundary(tableExists), destroyTableAssignment],
 }
