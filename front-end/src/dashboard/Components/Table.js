@@ -1,10 +1,30 @@
+import axios from "axios"
+import { useState } from "react"
+import ErrorAlert from "../../layout/ErrorAlert"
+// TODO: environment variables
+const BASE_API_URL = "http://localhost:5000" // "https://restaurant-reservation-api.vercel.app"
+
 export default function Table({ table }) {
+  const [deleteError, setDeleteError] = useState(null)
+
   const isOccupied = table.reservation_id
     ? `Occupied - reservation #${table.reservation_id}`
     : "Free"
 
-  const handleClick = () => {
-    // TODO
+  const handleClick = async () => {
+    if (
+      window.confirm(
+        "Is this table ready to seat new guests? This cannot be undone."
+      )
+    ) {
+      try {
+        await axios.delete(`${BASE_API_URL}/${table.table_id}/seat`)
+      } catch (err) {
+        if (err.response) {
+          setDeleteError(err.response.data)
+        }
+      }
+    }
   }
 
   return (
@@ -27,6 +47,7 @@ export default function Table({ table }) {
           </button>
         )}
       </div>
+      <ErrorAlert error={deleteError} />
     </div>
   )
 }
