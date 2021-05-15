@@ -40,6 +40,13 @@ function isAvailable(req, res, next) {
   }
   next({ status: 400, message: "Table is already occupied." })
 }
+function isUnavailable(req, res, next) {
+  const { table } = res.locals
+  if (table.reservation_id !== null) {
+    return next()
+  }
+  next({ status: 400, message: "Table is already available." })
+}
 async function isLargeEnough(req, res, next) {
   const { table } = res.locals
   const id = req.body.data.reservation_id
@@ -90,5 +97,9 @@ module.exports = {
     isLargeEnough,
     updateTableAssignment,
   ],
-  delete: [asyncErrorBoundary(tableExists), destroyTableAssignment],
+  delete: [
+    asyncErrorBoundary(tableExists),
+    isUnavailable,
+    destroyTableAssignment,
+  ],
 }
