@@ -20,12 +20,13 @@ export default function Reservation({ reservation }) {
     }
   }
 
-  // <a href={`/reservations/${reservation.reservation_id}/seat`}>
   const SeatButton = () =>
     reservation.status === "booked" && (
-      <button className="btn btn-outline-primary" onClick={handleClick}>
-        Seat
-      </button>
+      <a href={`/reservations/${reservation.reservation_id}/seat`}>
+        <button className="btn btn-outline-primary" onClick={handleClick}>
+          Seat
+        </button>
+      </a>
     )
 
   return (
