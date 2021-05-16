@@ -32,11 +32,14 @@ export default function Dashboard({ date }) {
     return () => abortController.abort()
   }
 
-  const reservationsList = reservations.map((reservation, index) => (
-    <div key={index}>
-      <Reservation reservation={reservation} />
-    </div>
-  ))
+  const reservationsList = reservations.map(
+    (reservation, index) =>
+      reservation.status !== "finished" && (
+        <div key={index}>
+          <Reservation reservation={reservation} />
+        </div>
+      )
+  )
 
   const tablesList = tables.map((table, index) => (
     <div key={index}>

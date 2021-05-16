@@ -1,4 +1,33 @@
+import axios from "axios"
+import { useState } from "react"
+import ErrorAlert from "../../layout/ErrorAlert"
+// TODO: environment variables
+const BASE_API_URL = "http://localhost:5000" // "https://restaurant-reservation-api.vercel.app"
+
 export default function Reservation({ reservation }) {
+  const [reservationsError, setReservationsError] = useState(null)
+
+  const handleClick = async () => {
+    try {
+      await axios.put(
+        `${BASE_API_URL}/reservations/${reservation.reservation_id}/status`,
+        "seated"
+      )
+    } catch (err) {
+      if (err.response) {
+        setReservationsError(err.response.data)
+      }
+    }
+  }
+
+  // <a href={`/reservations/${reservation.reservation_id}/seat`}>
+  const SeatButton = () =>
+    reservation.status === "booked" && (
+      <button className="btn btn-outline-primary" onClick={handleClick}>
+        Seat
+      </button>
+    )
+
   return (
     <div className="card">
       <div className="card-body">
@@ -10,13 +39,15 @@ export default function Reservation({ reservation }) {
         </h6>
         <p className="card-text">Party Size: {reservation.people}</p>
         <p className="card-text">Reservation #: {reservation.reservation_id}</p>
-        <a
-          href={`/reservations/${reservation.reservation_id}/seat`}
-          className="btn btn-outline-primary"
+        <p
+          className="card-text"
+          data-reservation-id-status={reservation.reservation_id}
         >
-          Seat
-        </a>
+          Reservation Status: {reservation.status}
+        </p>
+        {<SeatButton />}
       </div>
+      <ErrorAlert error={reservationsError} />
     </div>
   )
 }

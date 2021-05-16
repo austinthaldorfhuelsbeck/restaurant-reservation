@@ -14,6 +14,7 @@ async function reservationExists(req, res, next) {
   next({ status: 404, message: "Reservation cannot be found." })
 }
 function isValidReservation(req, res, next) {
+  // TODO: Switch statement
   const reservation = { ...req.body }
   if (!reservation.first_name) {
     return next({ status: 400, message: "First name is required." })
@@ -41,7 +42,7 @@ function isTuesday(req, res, next) {
   const date = new Date(reqDate)
   // console.log("Date: ", date)
   const dateString = date.toDateString()
-  // TODO: FIX One day behind for some reason??
+  // TODO: FIX One day behind
   // console.log("Date string: ", dateString)
   if (dateString.includes("Mon")) {
     return next({ status: 400, message: "Restaurant is closed on Tuesdays." })

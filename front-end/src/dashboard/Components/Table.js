@@ -7,6 +7,7 @@ const BASE_API_URL = "http://localhost:5000" // "https://restaurant-reservation-
 export default function Table({ table }) {
   const [isOccupied, setIsOccupied] = useState(false)
   const [deleteError, setDeleteError] = useState(null)
+  const [reservationsError, setReservationsError] = useState(null)
 
   useEffect(() => {
     setIsOccupied(table.reservation_id && true)
@@ -24,6 +25,16 @@ export default function Table({ table }) {
       } catch (err) {
         if (err.response) {
           setDeleteError(err.response.data)
+        }
+      }
+      try {
+        await axios.put(
+          `${BASE_API_URL}/reservations/${table.reservation_id}/status`,
+          "finished"
+        )
+      } catch (err) {
+        if (err.response) {
+          setReservationsError(err.response.data)
         }
       }
     }
@@ -52,6 +63,7 @@ export default function Table({ table }) {
         )}
       </div>
       <ErrorAlert error={deleteError} />
+      <ErrorAlert error={reservationsError} />
     </div>
   )
 }
