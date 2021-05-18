@@ -57,7 +57,7 @@ export default function SeatReservation() {
   ))
 
   return (
-    <div>
+    <div className="form-component m-5">
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="table_id">Table Number:</label>
