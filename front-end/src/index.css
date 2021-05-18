@@ -1,3 +1,5 @@
+html, body, #root, .container-fluid { height: 100%; }
+
 html, body { background-color: rgb(247, 247, 247); }
 
 body { font-family: "Lato", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
