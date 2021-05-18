@@ -50,15 +50,15 @@ export default function Dashboard({ date }) {
   return (
     <main>
       <h1>Dashboard</h1>
+      {date}
       <hr />
       <div className="container">
-        <h3>Date: {date}</h3>
-        <h4>Reservations:</h4>
+        <h5>Reservations</h5>
         <div className="col col-md-6 py-3">
           <ErrorAlert error={reservationsError} />
           {reservationsList}
         </div>
-        <h4>Tables:</h4>
+        <h5>Tables</h5>
         <div className="col col-md-6 py-3">
           <ErrorAlert error={tablesError} />
           {tablesList}

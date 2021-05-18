@@ -2,6 +2,11 @@ html, body { background-color: rgb(247, 247, 247); }
 
 body { font-family: "Lato", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
 
+h5 {
+  text-transform: uppercase;
+  font-family: "Noto Sans TC", Raleway, Arial, sans-serif;
+}
+
 main { margin: 1rem; }
 
 header {

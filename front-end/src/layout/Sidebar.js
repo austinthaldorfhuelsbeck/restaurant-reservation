@@ -2,7 +2,13 @@ import React from "react"
 
 import { Link } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faThumbtack } from "@fortawesome/free-solid-svg-icons"
+// TODO: consolidate this import
+import {
+  faThumbtack,
+  faCompass,
+  faSearch,
+  faExternalLinkAlt,
+} from "@fortawesome/free-solid-svg-icons"
 
 /**
  * Defines the menu for this application.
@@ -26,34 +32,22 @@ export default function SideBar() {
         <ul className="nav nav-pills flex-column mb-auto">
           <li>
             <Link to="/dashboard" className="nav-link text-white">
-              <svg className="bi me-2" width="16" height="16">
-                FA
-              </svg>
-              Dashboard
+              <FontAwesomeIcon icon={faCompass} /> Dashboard
             </Link>
           </li>
           <li>
             <Link to="/search" className="nav-link text-white">
-              <svg className="bi me-2" width="16" height="16">
-                FA
-              </svg>
-              Search
+              <FontAwesomeIcon icon={faSearch} /> Search
             </Link>
           </li>
           <li>
             <Link to="/reservations/new" className="nav-link text-white">
-              <svg className="bi me-2" width="16" height="16">
-                FA
-              </svg>
-              New Reservation
+              <FontAwesomeIcon icon={faExternalLinkAlt} /> New Reservation
             </Link>
           </li>
           <li>
             <Link to="/tables/new" className="nav-link text-white">
-              <svg className="bi me-2" width="16" height="16">
-                FA
-              </svg>
-              New Table
+              <FontAwesomeIcon icon={faExternalLinkAlt} /> New Table
             </Link>
           </li>
         </ul>
