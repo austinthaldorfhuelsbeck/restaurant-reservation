@@ -4,6 +4,11 @@ body { font-family: "Lato", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-se
 
 main { margin: 1rem; }
 
+header {
+  background-color: #fff;
+  box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.2);
+}
+
 .side-bar { min-width: 300px; }
 
 .side-bar, .bg-dark { background-color: #212529!important; }

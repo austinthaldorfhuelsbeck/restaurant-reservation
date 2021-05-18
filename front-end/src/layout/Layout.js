@@ -1,8 +1,7 @@
-import React from "react"
-import Sidebar from "./Sidebar"
+import React, { Fragment } from "react"
+import NavBar from "./NavBar"
+import SideBar from "./SideBar"
 import Routes from "./Routes"
-
-import "./Layout.css"
 
 /**
  * Defines the main layout of the application.
@@ -13,16 +12,21 @@ import "./Layout.css"
  */
 function Layout() {
   return (
-    <div className="container-fluid">
-      <div className="row h-100">
-        <div className="col-md-2 side-bar">
-          <Sidebar />
-        </div>
-        <div className="col">
-          <Routes />
+    <Fragment>
+      <header className="py-3 mb-3 border-bottom">
+        <NavBar />
+      </header>
+      <div className="container-fluid">
+        <div className="row h-100">
+          <div className="col-md-2 side-bar">
+            <SideBar />
+          </div>
+          <div className="col">
+            <Routes />
+          </div>
         </div>
       </div>
-    </div>
+    </Fragment>
   )
 }
 

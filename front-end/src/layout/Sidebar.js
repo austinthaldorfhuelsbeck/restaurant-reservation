@@ -1,6 +1,8 @@
 import React from "react"
 
 import { Link } from "react-router-dom"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faThumbtack } from "@fortawesome/free-solid-svg-icons"
 
 /**
  * Defines the menu for this application.
@@ -8,7 +10,7 @@ import { Link } from "react-router-dom"
  * @returns {JSX.Element}
  */
 
-function Menu() {
+export default function SideBar() {
   return (
     <nav>
       <div className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark">
@@ -16,10 +18,9 @@ function Menu() {
           to="/"
           className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
         >
-          <svg className="bi me-2" width="40" height="32">
-            FA
-          </svg>
-          <span className="fs-4">Periodic Tables</span>
+          <div className="fs-4">
+            <FontAwesomeIcon icon={faThumbtack} />
+          </div>
         </Link>
         <hr />
         <ul className="nav nav-pills flex-column mb-auto">
@@ -60,5 +61,3 @@ function Menu() {
     </nav>
   )
 }
-
-export default Menu
