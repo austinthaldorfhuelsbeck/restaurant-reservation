@@ -40,11 +40,13 @@ export default function Table({ table }) {
         <h6 className="card-subtitle mb-2 text-muted">
           Capacity: {table.capacity}
         </h6>
-        <p className="card-text" data-table-id-status={table.table_id}>
-          {isOccupied
-            ? `Occupied - reservation #${table.reservation_id}`
-            : "Free"}
-        </p>
+        <div className="card-text m-2" data-table-id-status={table.table_id}>
+          {isOccupied ? (
+            <p className="occupied">#{table.reservation_id}</p>
+          ) : (
+            <p className="free">Free</p>
+          )}
+        </div>
         {isOccupied && (
           <button
             onClick={handleClick}
