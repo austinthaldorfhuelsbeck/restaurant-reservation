@@ -50,6 +50,7 @@ export default function Dashboard({ date }) {
   return (
     <main>
       <h1>Dashboard</h1>
+      <hr />
       <div className="container">
         <h3>Date: {date}</h3>
         <h4>Reservations:</h4>

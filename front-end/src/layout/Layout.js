@@ -1,8 +1,8 @@
-import React from "react";
-import Menu from "./Menu";
-import Routes from "./Routes";
+import React from "react"
+import Sidebar from "./Sidebar"
+import Routes from "./Routes"
 
-import "./Layout.css";
+import "./Layout.css"
 
 /**
  * Defines the main layout of the application.
@@ -16,14 +16,14 @@ function Layout() {
     <div className="container-fluid">
       <div className="row h-100">
         <div className="col-md-2 side-bar">
-          <Menu />
+          <Sidebar />
         </div>
         <div className="col">
           <Routes />
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default Layout;
+export default Layout

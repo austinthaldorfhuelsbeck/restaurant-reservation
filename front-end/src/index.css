@@ -1,0 +1,18 @@
+html, body { background-color: rgb(247, 247, 247); }
+
+body { font-family: "Lato", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+
+main { margin: 1rem; }
+
+.side-bar { min-width: 300px; }
+
+.side-bar, .bg-dark { background-color: #212529!important; }
+
+hr {
+  border: 0;
+  clear:both;
+  display:block;
+  width: 96%;               
+  background-color:rgba(109, 109, 109, 0.466);
+  height: 1px;
+}
