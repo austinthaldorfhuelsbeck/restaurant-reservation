@@ -49,7 +49,7 @@ export default function Table({ table }) {
           <button
             onClick={handleClick}
             data-table-id-finish={table.table_id}
-            className="btn btn-outline-primary"
+            className="btn btn-outline-secondary"
           >
             Finish
           </button>

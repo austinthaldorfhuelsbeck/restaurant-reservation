@@ -7,7 +7,7 @@ h5 {
   font-family: "Noto Sans TC", Raleway, Arial, sans-serif;
 }
 
-main { margin: 1rem; }
+main, .component { margin: 1rem; }
 
 header {
   background-color: #fff;

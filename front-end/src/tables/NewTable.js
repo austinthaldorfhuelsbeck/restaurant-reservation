@@ -38,42 +38,44 @@ export default function NewTable() {
   }
 
   return (
-    <div className="form-component m-5">
+    <div className="component">
       <h1>New Table</h1>
       <hr />
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="table_name">Table Name</label>
-          <input
-            type="text"
-            className="form-control"
-            id="table_name"
-            placeholder="Name of the table"
-            onChange={handleChange}
-            value={formData.table_name}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="capacity">Capacity</label>
-          <input
-            type="number"
-            className="form-control"
-            id="capacity"
-            onChange={handleChange}
-            value={formData.capacity}
-          />
-        </div>
-        <button type="submit" className="btn btn-outline-secondary m-2">
-          Submit
-        </button>
-        <button
-          onClick={handleCancel}
-          className="btn btn-outline-secondary m-2"
-        >
-          Cancel
-        </button>
-      </form>
-      <ErrorAlert error={reservationsError} />
+      <div className="form-component m-5">
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="table_name">Table Name</label>
+            <input
+              type="text"
+              className="form-control"
+              id="table_name"
+              placeholder="Name of the table"
+              onChange={handleChange}
+              value={formData.table_name}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="capacity">Capacity</label>
+            <input
+              type="number"
+              className="form-control"
+              id="capacity"
+              onChange={handleChange}
+              value={formData.capacity}
+            />
+          </div>
+          <button type="submit" className="btn btn-outline-secondary m-2">
+            Submit
+          </button>
+          <button
+            onClick={handleCancel}
+            className="btn btn-outline-secondary m-2"
+          >
+            Cancel
+          </button>
+        </form>
+        <ErrorAlert error={reservationsError} />
+      </div>
     </div>
   )
 }
