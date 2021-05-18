@@ -41,7 +41,7 @@ export default function NewTable() {
     <div className="component">
       <h1>New Table</h1>
       <hr />
-      <div className="form-component m-5">
+      <div className="form-component m-5 col col-md-6">
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="table_name">Table Name</label>

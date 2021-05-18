@@ -33,7 +33,7 @@ export default function Reservation({ reservation }) {
 
   return (
     reservation.status !== "finished" && (
-      <div className="card m-3">
+      <div className="card">
         <div className="container card-body">
           <div className="row">
             <h5 className="col-11 card-title">

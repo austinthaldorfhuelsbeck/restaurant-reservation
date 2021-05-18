@@ -27,7 +27,7 @@ export default function DashboardNav({ date }) {
   }
 
   return (
-    <div>
+    <div className="mx-auto">
       <button
         onClick={() => handleChange(false)}
         className="btn btn-outline-secondary m-2"
