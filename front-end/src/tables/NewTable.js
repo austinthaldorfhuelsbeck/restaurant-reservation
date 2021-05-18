@@ -2,8 +2,6 @@ import axios from "axios"
 import { useState } from "react"
 import { useHistory } from "react-router-dom"
 import ErrorAlert from "../layout/ErrorAlert"
-// TODO: environment variables
-const BASE_API_URL = "http://localhost:5000" // "https://restaurant-reservation-api.vercel.app"
 
 export default function NewTable() {
   const initialFormState = {
@@ -24,7 +22,10 @@ export default function NewTable() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      await axios.post(`${BASE_API_URL}/tables/new`, formData)
+      await axios.post(
+        `${process.env.REACT_APP_API_BASE_URL}/tables/new`,
+        formData
+      )
       history.push("/dashboard")
     } catch (err) {
       if (err.response) {
@@ -37,7 +38,9 @@ export default function NewTable() {
   }
 
   return (
-    <div>
+    <div className="form-component m-5">
+      <h1>New Table</h1>
+      <hr />
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="table_name">Table Name</label>
@@ -60,10 +63,13 @@ export default function NewTable() {
             value={formData.capacity}
           />
         </div>
-        <button type="submit" className="btn btn-outline-primary">
+        <button type="submit" className="btn btn-outline-secondary m-2">
           Submit
         </button>
-        <button onClick={handleCancel} className="btn btn-outline-primary">
+        <button
+          onClick={handleCancel}
+          className="btn btn-outline-secondary m-2"
+        >
           Cancel
         </button>
       </form>

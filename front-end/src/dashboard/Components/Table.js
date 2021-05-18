@@ -34,7 +34,7 @@ export default function Table({ table }) {
   }
 
   return (
-    <div className="card">
+    <div className="card m-3">
       <div className="card-body">
         <h5 className="card-title">{table.table_name}</h5>
         <h6 className="card-subtitle mb-2 text-muted">

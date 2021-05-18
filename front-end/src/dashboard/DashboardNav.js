@@ -1,6 +1,9 @@
 import { useHistory } from "react-router-dom"
 import { formatAsDate } from "../utils/date-time"
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faBackward, faForward } from "@fortawesome/free-solid-svg-icons"
+
 export default function DashboardNav({ date }) {
   const history = useHistory()
 
@@ -27,18 +30,18 @@ export default function DashboardNav({ date }) {
     <div>
       <button
         onClick={() => handleChange(false)}
-        className="btn btn-outline-primary"
+        className="btn btn-outline-secondary m-2"
       >
-        Prev
+        <FontAwesomeIcon icon={faBackward} />
       </button>
-      <button onClick={handleToday} className="btn btn-outline-primary">
-        Today
+      <button onClick={handleToday} className="btn btn-outline-secondary m-2">
+        TODAY
       </button>
       <button
         onClick={() => handleChange(true)}
-        className="btn btn-outline-primary"
+        className="btn btn-outline-secondary m-2"
       >
-        Next
+        <FontAwesomeIcon icon={faForward} />
       </button>
     </div>
   )

@@ -42,7 +42,9 @@ export default function NewReservation() {
   }
 
   return (
-    <div>
+    <div className="form-component m-5">
+      <h1>New Reservation</h1>
+      <hr />
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="first_name">First Name</label>
@@ -111,10 +113,13 @@ export default function NewReservation() {
             value={formData.people}
           />
         </div>
-        <button type="submit" className="btn btn-outline-primary">
+        <button type="submit" className="btn btn-outline-secondary m-2">
           Submit
         </button>
-        <button onClick={handleCancel} className="btn btn-outline-primary">
+        <button
+          onClick={handleCancel}
+          className="btn btn-outline-secondary m-2"
+        >
           Cancel
         </button>
       </form>

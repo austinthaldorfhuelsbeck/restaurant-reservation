@@ -48,22 +48,28 @@ export default function Dashboard({ date }) {
   ))
 
   return (
-    <main>
-      <h1>Dashboard</h1>
-      {date}
+    <main className="container">
+      <div className="row">
+        <div className="col col-6">
+          <h1>Dashboard</h1>
+          {date}
+        </div>
+        <div className="col col-6 my-auto">
+          <DashboardNav date={date} />
+        </div>
+      </div>
       <hr />
-      <div className="container">
-        <h5>Reservations</h5>
-        <div className="col col-md-6 py-3">
+      <div className="row">
+        <div className="col col-12 col-md-6 py-3">
+          <h5>Reservations</h5>
           <ErrorAlert error={reservationsError} />
           {reservationsList}
         </div>
-        <h5>Tables</h5>
-        <div className="col col-md-6 py-3">
+        <div className="col col-12 col-md-6 py-3">
+          <h5>Tables</h5>
           <ErrorAlert error={tablesError} />
           {tablesList}
         </div>
-        <DashboardNav date={date} />
       </div>
     </main>
   )
