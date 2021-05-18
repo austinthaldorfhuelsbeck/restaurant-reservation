@@ -34,29 +34,27 @@ export default function Table({ table }) {
   }
 
   return (
-    <div className="card m-3">
-      <div className="card-body">
-        <h5 className="card-title">{table.table_name}</h5>
-        <h6 className="card-subtitle mb-2 text-muted">
-          Capacity: {table.capacity}
-        </h6>
-        <div className="card-text m-2" data-table-id-status={table.table_id}>
-          {isOccupied ? (
-            <p className="occupied">#{table.reservation_id}</p>
-          ) : (
-            <p className="free">Free</p>
-          )}
-        </div>
-        {isOccupied && (
-          <button
-            onClick={handleClick}
-            data-table-id-finish={table.table_id}
-            className="btn btn-outline-secondary"
-          >
-            Finish
-          </button>
+    <div className="card-body">
+      <h5 className="card-title">{table.table_name}</h5>
+      <h6 className="card-subtitle mb-2 text-muted">
+        Capacity: {table.capacity}
+      </h6>
+      <div className="card-text m-2" data-table-id-status={table.table_id}>
+        {isOccupied ? (
+          <p className="occupied">#{table.reservation_id}</p>
+        ) : (
+          <p className="free">Free</p>
         )}
       </div>
+      {isOccupied && (
+        <button
+          onClick={handleClick}
+          data-table-id-finish={table.table_id}
+          className="btn btn-outline-secondary"
+        >
+          Finish
+        </button>
+      )}
       <ErrorAlert error={deleteError} />
     </div>
   )

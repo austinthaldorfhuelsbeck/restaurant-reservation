@@ -5,9 +5,12 @@ html, body { background-color: rgb(241, 241, 241); }
 body { font-family: "Lato", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
 
 h5 {
-  text-transform: uppercase;
-  font-family: "Noto Sans TC", Raleway, Arial, sans-serif;
+  text-transform: capitalize;
+  font-size: 1rem;
+  font-weight: 700;
 }
+
+h6 { font-family: "Source Code Pro", monospace }
 
 .occupied, .free {
   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -40,10 +43,8 @@ hr {
   height: 1px;
 }
 
-form { max-width: 750px; }
+.form-component form { max-width: 750px; }
 
-.card {
-  border: none;
-}
+/* .list-group { border: none; } */
 
 .side-bar .svg-inline--fa { margin-right: 1rem; }

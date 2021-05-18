@@ -4,6 +4,7 @@ import ErrorAlert from "../../layout/ErrorAlert"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faClock, faCheck } from "@fortawesome/free-solid-svg-icons"
+import { convertFromMilitary } from "../../utils/date-time"
 
 export default function Reservation({ reservation }) {
   const [reservationsError, setReservationsError] = useState(null)
@@ -31,34 +32,47 @@ export default function Reservation({ reservation }) {
       </a>
     )
 
-  const time = reservation.reservation_time
-
   return (
     reservation.status !== "finished" && (
       <div className="container card-body">
         <h5 className="text-center">
           {reservation.first_name} {reservation.last_name}
         </h5>
-        <div className="row text-muted">
-          <p
-            className="my-auto"
-            data-reservation-id-status={reservation.reservation_id}
-          >
-            {reservation.status === "booked" && (
-              <span title="Booked">
-                <FontAwesomeIcon icon={faClock} />
-              </span>
-            )}
-            {reservation.status === "seated" && (
-              <span title="Seated">
-                <FontAwesomeIcon icon={faCheck} />
-              </span>
-            )}
-          </p>
-          <h6 className="ml-2 my-auto">{time}</h6>
-        </div>
-        <p className="card-text">Party Size: {reservation.people}</p>
-        <p className="card-text">Reservation #: {reservation.reservation_id}</p>
+        <table className="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Status</th>
+              <th scope="col">Time</th>
+              <th scope="col">Party of</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">{reservation.reservation_id}</th>
+              <td>
+                <p data-reservation-id-status={reservation.reservation_id}>
+                  {reservation.status === "booked" && (
+                    <span title="Booked">
+                      <FontAwesomeIcon icon={faClock} />
+                    </span>
+                  )}
+                  {reservation.status === "seated" && (
+                    <span title="Seated">
+                      <FontAwesomeIcon icon={faCheck} />
+                    </span>
+                  )}
+                </p>
+              </td>
+              <td>
+                <h6 className="my-auto">
+                  {convertFromMilitary(reservation.reservation_time)}
+                </h6>
+              </td>
+              <td>{reservation.people}</td>
+            </tr>
+          </tbody>
+        </table>
         {<SeatButton />}
         <ErrorAlert error={reservationsError} />
       </div>

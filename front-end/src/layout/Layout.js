@@ -13,7 +13,7 @@ import Routes from "./Routes"
 function Layout() {
   return (
     <Fragment>
-      <header className="py-3 mb-3 border-bottom">
+      <header className="mb-3 border-bottom">
         <NavBar />
       </header>
       <div className="container-fluid">
