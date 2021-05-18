@@ -2,8 +2,6 @@ import axios from "axios"
 import { useState } from "react"
 import { useHistory } from "react-router-dom"
 import ErrorAlert from "../layout/ErrorAlert"
-// TODO: environment variables
-const BASE_API_URL = "http://localhost:5000" // "https://restaurant-reservation-api.vercel.app"
 
 export default function NewReservation() {
   const initialFormState = {
@@ -28,7 +26,10 @@ export default function NewReservation() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      await axios.post(`${BASE_API_URL}/reservations`, formData)
+      await axios.post(
+        `${process.env.REACT_APP_API_BASE_URL}/reservations`,
+        formData
+      )
       history.push(`/dashboard?date=${formData.reservation_date}`)
     } catch (err) {
       if (err.response) {

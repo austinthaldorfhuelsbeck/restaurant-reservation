@@ -14,7 +14,6 @@ async function reservationExists(req, res, next) {
   next({ status: 404, message: "Reservation cannot be found." })
 }
 function isValidReservation(req, res, next) {
-  // TODO: Switch statement
   const reservation = { ...req.body }
   if (!reservation.first_name) {
     return next({ status: 400, message: "First name is required." })
@@ -96,6 +95,13 @@ function read(req, res) {
   const data = res.locals.reservation
   res.json({ data })
 }
+async function update(req, res) {
+  const { reservation } = res.locals
+  const { status } = req.body.data
+  reservation.status = status
+  const data = await service.update(reservation, reservation.reservation_id)
+  res.json({ data })
+}
 
 module.exports = {
   list: [asyncErrorBoundary(list)],
@@ -106,4 +112,5 @@ module.exports = {
     create,
   ],
   read: [asyncErrorBoundary(reservationExists), read],
+  update: [asyncErrorBoundary(reservationExists), update],
 }

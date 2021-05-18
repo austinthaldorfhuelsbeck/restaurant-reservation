@@ -4,8 +4,6 @@ import { useHistory, useParams } from "react-router-dom"
 
 import { listTables } from "../utils/api"
 import ErrorAlert from "../layout/ErrorAlert"
-// TODO: environment variables
-const BASE_API_URL = "http://localhost:5000" // "https://restaurant-reservation-api.vercel.app"
 
 export default function SeatReservation() {
   const initialFormState = { table_id: 0 }
@@ -36,7 +34,10 @@ export default function SeatReservation() {
     e.preventDefault()
     const req = { data: { reservation_id } }
     try {
-      await axios.put(`${BASE_API_URL}/tables/${formData.table_id}/seat`, req)
+      await axios.put(
+        `${process.env.REACT_APP_API_BASE_URL}/tables/${formData.table_id}/seat`,
+        req
+      )
       history.push("/dashboard")
     } catch (err) {
       if (err.response) {
