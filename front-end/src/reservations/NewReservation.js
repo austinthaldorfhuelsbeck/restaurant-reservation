@@ -53,7 +53,7 @@ export default function NewReservation() {
               <input
                 type="text"
                 className="form-control"
-                id="first_name"
+                name="first_name"
                 placeholder="Customer's first name here"
                 onChange={handleChange}
                 value={formData.first_name}
@@ -64,7 +64,7 @@ export default function NewReservation() {
               <input
                 type="text"
                 className="form-control"
-                id="last_name"
+                name="last_name"
                 placeholder="Customer's last name here"
                 onChange={handleChange}
                 value={formData.last_name}
@@ -77,7 +77,7 @@ export default function NewReservation() {
               <input
                 type="tel"
                 className="form-control"
-                id="mobile_number"
+                name="mobile_number"
                 placeholder="E.g. 541-444-0755"
                 onChange={handleChange}
                 value={formData.mobile_number}
@@ -88,7 +88,7 @@ export default function NewReservation() {
               <input
                 type="number"
                 className="form-control"
-                id="people"
+                name="people"
                 onChange={handleChange}
                 value={formData.people}
               />
@@ -100,7 +100,7 @@ export default function NewReservation() {
                 placeholder="YYYY-MM-DD"
                 pattern="\d{4}-\d{2}-\d{2}"
                 className="form-control"
-                id="reservation_date"
+                name="reservation_date"
                 onChange={handleChange}
                 value={formData.reservation_date}
               />
@@ -112,7 +112,7 @@ export default function NewReservation() {
                 placeholder="HH:MM"
                 pattern="[0-9]{2}:[0-9]{2}"
                 className="form-control"
-                id="reservation_time"
+                name="reservation_time"
                 onChange={handleChange}
                 value={formData.reservation_time}
               />
