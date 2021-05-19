@@ -13,7 +13,7 @@ export default function ListTables({ tables, setRefresh }) {
     if (!toggle || !tables) return null
     return tables.map((table, index) => (
       <li className="list-group-item" key={index}>
-        <Table table={table} />
+        <Table table={table} setRefresh={setRefresh} />
       </li>
     ))
   }

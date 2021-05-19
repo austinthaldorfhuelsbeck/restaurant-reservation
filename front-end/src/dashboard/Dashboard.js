@@ -22,7 +22,7 @@ export default function Dashboard({ date }) {
   const [tablesError, setTablesError] = useState(null)
   const [refresh, setRefresh] = useState(false)
 
-  useEffect(loadDashboard, [date])
+  useEffect(loadDashboard, [date, refresh])
 
   function loadDashboard() {
     const abortController = new AbortController()
@@ -30,6 +30,9 @@ export default function Dashboard({ date }) {
 
     listReservations({ date }, abortController.signal)
       .then(setReservations)
+      .then((res) => {
+        setRefresh(false)
+      })
       .catch(setReservationsError)
     listTables(abortController.signal).then(setTables).catch(setTablesError)
 
@@ -50,11 +53,7 @@ export default function Dashboard({ date }) {
       <div className="row">
         <div className="col col-12 col-lg-6">
           <DashboardNav date={date} />
-          <ListReservations
-            reservations={reservations}
-            refresh={refresh}
-            setRefresh={setRefresh}
-          />
+          <ListReservations reservations={reservations} />
         </div>
         <div className="col col-12 col-lg-6">
           <ListTables tables={tables} setRefresh={setRefresh} />

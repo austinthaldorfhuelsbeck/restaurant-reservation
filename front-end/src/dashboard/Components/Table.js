@@ -2,7 +2,7 @@ import axios from "axios"
 import React, { useState, useEffect } from "react"
 import ErrorAlert from "../../layout/ErrorAlert"
 
-export default function Table({ table }) {
+export default function Table({ table, setRefresh }) {
   const [isOccupied, setIsOccupied] = useState(false)
   const [deleteError, setDeleteError] = useState(null)
 
@@ -25,6 +25,7 @@ export default function Table({ table }) {
           `${process.env.REACT_APP_API_BASE_URL}/tables/${table.table_id}/seat`
         )
         setIsOccupied(false)
+        setRefresh(true)
       } catch (err) {
         if (err.response) {
           setDeleteError(err.response.data)
