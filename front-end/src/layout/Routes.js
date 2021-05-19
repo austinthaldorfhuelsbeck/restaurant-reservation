@@ -6,6 +6,7 @@ import Dashboard from "../dashboard/Dashboard"
 import NewReservation from "../reservations/NewReservation"
 import SeatReservation from "../reservations/SeatReservation"
 import NewTable from "../tables/NewTable"
+import Search from "../search/Search"
 import NotFound from "./NotFound"
 
 import { today } from "../utils/date-time"
@@ -20,7 +21,6 @@ import useQuery from "../utils/useQuery"
 export default function Routes() {
   const query = useQuery()
   const queryResult = query.get("date") || today()
-  // console.log("Query: ", queryResult)
 
   return (
     <Switch>
@@ -41,6 +41,9 @@ export default function Routes() {
       </Route>
       <Route path="/tables/new">
         <NewTable />
+      </Route>
+      <Route path="/search">
+        <Search />
       </Route>
       <Route>
         <NotFound />

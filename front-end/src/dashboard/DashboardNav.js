@@ -20,7 +20,7 @@ export default function DashboardNav({ date }) {
   }
 
   return (
-    <div className="d-flex align-items-start align-items-sm-end justify-content-center">
+    <div className="d-flex justify-content-center">
       <button
         onClick={() => handleChange(false)}
         className="btn btn-outline-dark m-2"

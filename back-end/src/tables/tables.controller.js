@@ -28,10 +28,12 @@ async function tableExists(req, res, next) {
   const table = tableList[0]
   if (table) {
     res.locals.table = table
-    console.log("Table exists!")
     return next()
   }
-  next({ status: 404, message: "Table cannot be found." })
+  next({
+    status: 404,
+    message: `Table ${req.params.table_id} cannot be found.`,
+  })
 }
 function isAvailable(req, res, next) {
   const { table } = res.locals

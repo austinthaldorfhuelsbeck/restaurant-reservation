@@ -11,27 +11,30 @@ async function reservationExists(req, res, next) {
     res.locals.reservation = reservation
     return next()
   }
-  next({ status: 404, message: "Reservation cannot be found." })
+  next({
+    status: 404,
+    message: `Reservation ${req.params.reservation_id} cannot be found.`,
+  })
 }
 function isValidReservation(req, res, next) {
   const reservation = { ...req.body }
   if (!reservation.first_name) {
-    return next({ status: 400, message: "First name is required." })
+    return next({ status: 400, message: "first_name is required." })
   }
   if (!reservation.last_name) {
-    return next({ status: 400, message: "Last name is required." })
+    return next({ status: 400, message: "last_name is required." })
   }
   if (!reservation.mobile_number) {
-    return next({ status: 400, message: "Mobile number is required." })
+    return next({ status: 400, message: "mobile_number is required." })
   }
   if (!reservation.reservation_date) {
-    return next({ status: 400, message: "Reservation date is required." })
+    return next({ status: 400, message: "reservation_date is required." })
   }
   if (!reservation.reservation_time) {
-    return next({ status: 400, message: "Reservation time is required." })
+    return next({ status: 400, message: "reservation_time is required." })
   }
   if (!reservation.people) {
-    return next({ status: 400, message: "Party size is required." })
+    return next({ status: 400, message: "people is required." })
   }
   res.locals.reservation = reservation
   return next()

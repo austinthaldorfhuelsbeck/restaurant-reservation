@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import ErrorAlert from "../../layout/ErrorAlert"
 
 export default function Table({ table }) {
@@ -11,7 +11,6 @@ export default function Table({ table }) {
   }, [table])
 
   const handleClick = async () => {
-    const req = { data: { status: "finished" } }
     if (
       window.confirm(
         "Is this table ready to seat new guests? This cannot be undone."
@@ -20,11 +19,12 @@ export default function Table({ table }) {
       try {
         await axios.put(
           `${process.env.REACT_APP_API_BASE_URL}/reservations/${table.reservation_id}/status`,
-          req
+          { data: { status: "finished" } }
         )
         await axios.delete(
           `${process.env.REACT_APP_API_BASE_URL}/tables/${table.table_id}/seat`
         )
+        setIsOccupied(false)
       } catch (err) {
         if (err.response) {
           setDeleteError(err.response.data)
@@ -34,27 +34,28 @@ export default function Table({ table }) {
   }
 
   return (
-    <div className="card-body">
-      <h5 className="card-title">{table.table_name}</h5>
-      <h6 className="card-subtitle mb-2 text-muted">
-        Capacity: {table.capacity}
-      </h6>
-      <div className="card-text m-2" data-table-id-status={table.table_id}>
+    <div className="container card-body">
+      <h5 className="text-center">{table.table_name}</h5>
+      <div className="m-2" data-table-id-status={table.table_id}>
         {isOccupied ? (
-          <p className="occupied">#{table.reservation_id}</p>
+          <div className="d-flex justify-content-between">
+            <span class="badge bg-danger my-auto">
+              <h5>Occupied by #{table.reservation_id}</h5>
+            </span>
+            <button
+              onClick={handleClick}
+              data-table-id-finish={table.table_id}
+              className="btn btn-outline-secondary"
+            >
+              Finish
+            </button>
+          </div>
         ) : (
-          <p className="free">Free</p>
+          <span class="badge bg-success">
+            <h5>Available</h5>
+          </span>
         )}
       </div>
-      {isOccupied && (
-        <button
-          onClick={handleClick}
-          data-table-id-finish={table.table_id}
-          className="btn btn-outline-secondary"
-        >
-          Finish
-        </button>
-      )}
       <ErrorAlert error={deleteError} />
     </div>
   )

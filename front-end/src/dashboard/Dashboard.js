@@ -3,7 +3,8 @@ import { listReservations, listTables } from "../utils/api"
 
 import ErrorAlert from "../layout/ErrorAlert"
 import DashboardNav from "./DashboardNav"
-import Component from "./Components/Component"
+import ListReservations from "./Components/ListReservations"
+import ListTables from "./Components/ListTables"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons"
@@ -46,12 +47,12 @@ export default function Dashboard({ date }) {
       </div>
       <hr />
       <div className="row">
-        <div className="col col-12 col-md-6">
+        <div className="col col-12 col-lg-6">
           <DashboardNav date={date} />
-          <Component title="reservations" items={reservations} />
+          <ListReservations reservations={reservations} />
         </div>
-        <div className="col col-12 col-md-6">
-          <Component title="tables" items={tables} />
+        <div className="col col-12 col-lg-6">
+          <ListTables {...tables} />
         </div>
         <ErrorAlert error={reservationsError} />
         <ErrorAlert error={tablesError} />

@@ -32,11 +32,14 @@ export default function SeatReservation() {
   }
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const req = { data: { reservation_id } }
     try {
       await axios.put(
+        `${process.env.REACT_APP_API_BASE_URL}/reservations/${reservation_id}/status`,
+        { data: { status: "seated" } }
+      )
+      await axios.put(
         `${process.env.REACT_APP_API_BASE_URL}/tables/${formData.table_id}/seat`,
-        req
+        { data: { reservation_id } }
       )
       history.push("/dashboard")
     } catch (err) {
