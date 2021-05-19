@@ -20,6 +20,7 @@ export default function Dashboard({ date }) {
   const [reservationsError, setReservationsError] = useState(null)
   const [tables, setTables] = useState([])
   const [tablesError, setTablesError] = useState(null)
+  const [refresh, setRefresh] = useState(false)
 
   useEffect(loadDashboard, [date])
 
@@ -49,10 +50,14 @@ export default function Dashboard({ date }) {
       <div className="row">
         <div className="col col-12 col-lg-6">
           <DashboardNav date={date} />
-          <ListReservations reservations={reservations} />
+          <ListReservations
+            reservations={reservations}
+            refresh={refresh}
+            setRefresh={setRefresh}
+          />
         </div>
         <div className="col col-12 col-lg-6">
-          <ListTables tables={tables} />
+          <ListTables tables={tables} setRefresh={setRefresh} />
         </div>
         <ErrorAlert error={reservationsError} />
         <ErrorAlert error={tablesError} />

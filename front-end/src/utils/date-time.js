@@ -82,12 +82,14 @@ export function next(currentDate) {
 }
 
 export function convertFromMilitary(time) {
-  let hours = Number(time.slice(0, 2))
-  let period = "am"
-  if (hours > 12) {
-    hours = hours - 12
-    period = "pm"
+  if (time) {
+    let hours = Number(time.slice(0, 2))
+    let period = "am"
+    if (hours > 12) {
+      hours = hours - 12
+      period = "pm"
+    }
+    const minutes = time.slice(3, 5)
+    return hours + ":" + minutes + period
   }
-  const minutes = Number(time.slice(3, 5))
-  return hours + ":" + minutes + period
 }
