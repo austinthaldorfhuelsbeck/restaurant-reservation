@@ -52,7 +52,7 @@ export default function Dashboard({ date }) {
           <ListReservations reservations={reservations} />
         </div>
         <div className="col col-12 col-lg-6">
-          <ListTables {...tables} />
+          <ListTables tables={tables} />
         </div>
         <ErrorAlert error={reservationsError} />
         <ErrorAlert error={tablesError} />

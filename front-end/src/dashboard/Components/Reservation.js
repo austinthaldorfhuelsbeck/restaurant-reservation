@@ -7,7 +7,7 @@ import { faClock, faCheck } from "@fortawesome/free-solid-svg-icons"
 import { convertFromMilitary } from "../../utils/date-time"
 
 export default function Reservation({ reservation }) {
-  console.log("Reservation:", reservation)
+  // console.log("Reservation:", reservation)
   const [reservationsError, setReservationsError] = useState(null)
 
   const handleClick = async () => {
