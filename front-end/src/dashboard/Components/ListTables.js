@@ -5,8 +5,8 @@ import Table from "./Table"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons"
 
-export default function ListTables({ tables }) {
-  console.log("Tables:", tables)
+export default function ListTables({ tables, setRefresh }) {
+  // console.log("Tables:", tables)
   const [toggle, setToggle] = useState(true)
 
   const renderList = () => {
