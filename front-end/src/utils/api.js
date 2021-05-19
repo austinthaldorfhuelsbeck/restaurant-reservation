@@ -70,6 +70,17 @@ export async function listReservations(params, signal) {
 }
 
 /**
+ * Retrieves a single existing reservation.
+ * @returns {Promise<[reservation]>}
+ *  a promise that resolves to a reservation saved in the database.
+ */
+
+export async function readReservation(id) {
+  const url = new URL(`${API_BASE_URL}/reservations/${id}`)
+  return await fetchJson(url, [])
+}
+
+/**
  * Retrieves all existing tables.
  * @returns {Promise<[reservation]>}
  *  a promise that resolves to a possibly empty array of reservation saved in the database.
