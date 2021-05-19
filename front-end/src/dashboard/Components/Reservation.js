@@ -1,37 +1,15 @@
-import axios from "axios"
-import { useState } from "react"
-import ErrorAlert from "../../layout/ErrorAlert"
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faClock, faCheck } from "@fortawesome/free-solid-svg-icons"
 import { convertFromMilitary } from "../../utils/date-time"
 
 export default function Reservation({ reservation }) {
   // console.log("Reservation:", reservation)
-  const [reservationsError, setReservationsError] = useState(null)
 
-  const handleClick = async () => {
-    const req = { data: { status: "seated" } }
-    try {
-      await axios.put(
-        `${process.enb.API_BASE_URL}/reservations/${reservation.reservation_id}/status`,
-        req
-      )
-    } catch (err) {
-      if (err.response) {
-        setReservationsError(err.response.data)
-      }
-    }
-  }
-
-  const SeatButton = () =>
-    reservation.status === "booked" && (
-      <a href={`/reservations/${reservation.reservation_id}/seat`}>
-        <button className="btn btn-outline-secondary" onClick={handleClick}>
-          Seat
-        </button>
-      </a>
-    )
+  const seatButton = reservation.status === "booked" && (
+    <a href={`/reservations/${reservation.reservation_id}/seat`}>
+      <button className="btn btn-outline-secondary">Seat</button>
+    </a>
+  )
 
   return (
     <div className="container card-body">
@@ -75,8 +53,7 @@ export default function Reservation({ reservation }) {
           </tr>
         </tbody>
       </table>
-      {<SeatButton />}
-      <ErrorAlert error={reservationsError} />
+      {seatButton}
     </div>
   )
 }
