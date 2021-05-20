@@ -2,7 +2,7 @@ import axios from "axios"
 import React, { useState, useEffect } from "react"
 import ErrorAlert from "../../layout/ErrorAlert"
 
-export default function Table({ table, setRefresh }) {
+export default function Table({ table, setRefresh = false }) {
   const [isOccupied, setIsOccupied] = useState(false)
   const [deleteError, setDeleteError] = useState(null)
 

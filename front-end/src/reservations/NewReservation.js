@@ -25,7 +25,7 @@ export default function NewReservation() {
   }
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log(formData)
+    // console.log(formData)
     try {
       await axios.post(
         `${process.env.REACT_APP_API_BASE_URL}/reservations`,
