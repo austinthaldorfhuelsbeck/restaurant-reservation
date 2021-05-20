@@ -1,7 +1,7 @@
 import axios from "axios"
 import React, { useState } from "react"
 import ErrorAlert from "../layout/ErrorAlert"
-import ListTables from "../dashboard/Components/ListTables"
+import ListReservations from "../dashboard/Components/ListReservations"
 
 export default function Search() {
   const [formData, setFormData] = useState({ mobile_number: "" })
@@ -56,7 +56,7 @@ export default function Search() {
         </form>
         <ErrorAlert error={searchError} />
       </div>
-      <ListTables tables={results} />
+      <ListReservations reservations={results} />
     </div>
   )
 }

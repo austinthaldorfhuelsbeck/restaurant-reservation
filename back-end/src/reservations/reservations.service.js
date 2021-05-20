@@ -13,6 +13,15 @@ function listDate(date) {
     .where({ "r.reservation_date": date })
 }
 
+function search(mobile_number) {
+  return knex("reservations")
+    .whereRaw(
+      "translate(mobile_number, '() -', '') like ?",
+      `%${mobile_number.replace(/\D/g, "")}%`
+    )
+    .orderBy("reservation_date")
+}
+
 /**
  * CRUD services for reservation resources
  * Create returns a list, of which we only need the first element
@@ -36,6 +45,7 @@ function update(updatedReservation, id) {
 module.exports = {
   list,
   listDate,
+  search,
   create,
   read,
   update,
