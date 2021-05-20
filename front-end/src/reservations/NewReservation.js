@@ -20,11 +20,12 @@ export default function NewReservation() {
   const handleChange = ({ target }) => {
     setFormData({
       ...formData,
-      [target.id]: target.value,
+      [target.name]: target.value,
     })
   }
   const handleSubmit = async (e) => {
     e.preventDefault()
+    console.log(formData)
     try {
       await axios.post(
         `${process.env.REACT_APP_API_BASE_URL}/reservations`,
