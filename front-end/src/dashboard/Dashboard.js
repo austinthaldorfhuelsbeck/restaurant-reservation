@@ -7,7 +7,10 @@ import ListReservations from "./Components/ListReservations"
 import ListTables from "./Components/ListTables"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons"
+import {
+  faTachometerAlt,
+  faCalendarAlt,
+} from "@fortawesome/free-solid-svg-icons"
 
 /**
  *  Defines the dashboard page.
@@ -43,7 +46,14 @@ export default function Dashboard({ date }) {
     <main className="container">
       <div className="row">
         <div className="col col-6">
-          <h1>Dashboard</h1>
+          <h1>
+            <FontAwesomeIcon
+              icon={faTachometerAlt}
+              size="sm"
+              className="mr-2"
+            />
+            Dashboard
+          </h1>
           <p>
             <FontAwesomeIcon icon={faCalendarAlt} /> {date}
           </p>

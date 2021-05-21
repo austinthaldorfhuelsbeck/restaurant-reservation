@@ -3,7 +3,14 @@ import React, { useState } from "react"
 import ErrorAlert from "../../layout/ErrorAlert"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faClock, faCheck } from "@fortawesome/free-solid-svg-icons"
+import {
+  faClock,
+  faCheck,
+  faChair,
+  faEdit,
+  faBan,
+} from "@fortawesome/free-solid-svg-icons"
+
 import { convertFromMilitary } from "../../utils/date-time"
 
 export default function Reservation({ reservation, setRefresh }) {
@@ -32,21 +39,27 @@ export default function Reservation({ reservation, setRefresh }) {
 
   const seatButton = reservation.status === "booked" && (
     <a href={`/reservations/${reservation.reservation_id}/seat`}>
-      <button className="btn btn-outline-secondary">Seat</button>
+      <button className="btn btn-outline-dark">
+        <FontAwesomeIcon icon={faChair} className="mr-2" />
+        Seat
+      </button>
     </a>
   )
   const editButton = reservation.status === "booked" && (
     <a href={`/reservations/${reservation.reservation_id}/edit`}>
-      <button className="btn btn-outline-secondary">Edit</button>
+      <button className="btn btn-outline-secondary">
+        <FontAwesomeIcon icon={faEdit} className="mr-2" />
+        Edit
+      </button>
     </a>
   )
   const cancelButton = reservation.status === "booked" && (
     <button
-      className="btn btn-outline-secondary"
+      className="btn btn-danger"
       data-reservation-id-cancel={reservation.reservation_id}
       onClick={handleCancel}
     >
-      Cancel
+      <FontAwesomeIcon icon={faBan} />
     </button>
   )
 
@@ -70,12 +83,12 @@ export default function Reservation({ reservation, setRefresh }) {
             <td>
               <p data-reservation-id-status={reservation.reservation_id}>
                 {reservation.status === "booked" && (
-                  <span title="Booked">
+                  <span title="Booked" className="text-muted">
                     <FontAwesomeIcon icon={faClock} />
                   </span>
                 )}
                 {reservation.status === "seated" && (
-                  <span title="Seated">
+                  <span title="Seated" className="text-success">
                     <FontAwesomeIcon icon={faCheck} />
                   </span>
                 )}
