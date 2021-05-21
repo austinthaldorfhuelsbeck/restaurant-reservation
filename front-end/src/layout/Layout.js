@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react"
 import NavBar from "./NavBar"
-import SideBar from "./SideBar"
+import SideBar from "./SideBar.js"
 import Routes from "./Routes"
 
 /**
