@@ -26,7 +26,7 @@ export default function ListReservations({ reservations }) {
 
   return (
     <ul className="list-group py-3">
-      <li className="list-group-item d-flex align-items-start align-items-sm-end justify-content-between">
+      <li className="list-group-item d-flex justify-content-between">
         <h5 className="my-auto">Reservations</h5>
         <p className="text-secondary my-auto" onClick={handleHide}>
           {toggle ? (
