@@ -54,9 +54,9 @@ export default function Dashboard({ date }) {
             />
             Dashboard
           </h1>
-          <p>
-            <FontAwesomeIcon icon={faCalendarAlt} /> {date}
-          </p>
+          <h4>
+            <FontAwesomeIcon icon={faCalendarAlt} size="sm" /> {date}
+          </h4>
         </div>
       </div>
       <hr />

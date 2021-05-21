@@ -22,7 +22,9 @@ function Layout() {
         <div className="row h-100">
           <div
             className={
-              isHide ? "col-md-1 side-bar" : "col-md-3 side-bar min-width"
+              isHide
+                ? "col-md-2 col-xl-1 side-bar"
+                : "col-md-3 side-bar min-width"
             }
           >
             <SideBar isHide={isHide} setIsHide={setIsHide} />

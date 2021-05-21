@@ -2,6 +2,9 @@ import axios from "axios"
 import React, { useState, useEffect } from "react"
 import ErrorAlert from "../../layout/ErrorAlert"
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons"
+
 export default function Table({ table, setRefresh = false }) {
   const [isOccupied, setIsOccupied] = useState(false)
   const [deleteError, setDeleteError] = useState(null)
@@ -40,8 +43,11 @@ export default function Table({ table, setRefresh = false }) {
       <div className="m-2" data-table-id-status={table.table_id}>
         {isOccupied ? (
           <div className="d-flex justify-content-between">
-            <span className="badge bg-danger my-auto">
-              <h5>Occupied by #{table.reservation_id}</h5>
+            <span className="badge bg-danger text-light my-auto">
+              <h5>
+                <FontAwesomeIcon icon={faTimes} className="mr-2" />
+                Occupied by #{table.reservation_id}
+              </h5>
             </span>
             <button
               onClick={handleClick}
@@ -52,8 +58,11 @@ export default function Table({ table, setRefresh = false }) {
             </button>
           </div>
         ) : (
-          <span className="badge bg-success">
-            <h5>Available</h5>
+          <span className="badge bg-success text-light">
+            <h5>
+              <FontAwesomeIcon icon={faCheck} className="mr-2" />
+              Available
+            </h5>
           </span>
         )}
       </div>

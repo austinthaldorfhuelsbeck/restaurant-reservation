@@ -50,3 +50,10 @@ hr {
 .rotate { transform: rotate(90deg); }
 
 .side-bar .svg-inline--fa { margin-right: 1rem; }
+
+@media only screen and (max-width: 768px) {
+  .hidden-mobile {
+      display: none;
+  }
+}
+

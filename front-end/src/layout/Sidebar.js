@@ -33,31 +33,33 @@ export default function SideBar({ isHide, setIsHide }) {
           </div>
         </div>
         <hr />
-        <ul className="nav nav-pills flex-column mb-auto">
-          <li>
-            <Link to="/dashboard" className="nav-link text-white">
-              <FontAwesomeIcon icon={faCompass} />
-              {isHide ? "" : "Dashboard"}
-            </Link>
-          </li>
-          <li>
-            <Link to="/search" className="nav-link text-white">
-              <FontAwesomeIcon icon={faSearch} /> {isHide ? "" : "Search"}
-            </Link>
-          </li>
-          <li>
-            <Link to="/reservations/new" className="nav-link text-white">
-              <FontAwesomeIcon icon={faExternalLinkAlt} />
-              {isHide ? "" : "New Reservation"}
-            </Link>
-          </li>
-          <li>
-            <Link to="/tables/new" className="nav-link text-white">
-              <FontAwesomeIcon icon={faExternalLinkAlt} />
-              {isHide ? "" : "New Table"}
-            </Link>
-          </li>
-        </ul>
+        <div className={isHide ? "hidden-mobile" : ""}>
+          <ul className="nav nav-pills flex-column mb-auto">
+            <li>
+              <Link to="/dashboard" className="nav-link text-white">
+                <FontAwesomeIcon icon={faCompass} />
+                {isHide ? "" : "Dashboard"}
+              </Link>
+            </li>
+            <li>
+              <Link to="/search" className="nav-link text-white">
+                <FontAwesomeIcon icon={faSearch} /> {isHide ? "" : "Search"}
+              </Link>
+            </li>
+            <li>
+              <Link to="/reservations/new" className="nav-link text-white">
+                <FontAwesomeIcon icon={faExternalLinkAlt} />
+                {isHide ? "" : "New Reservation"}
+              </Link>
+            </li>
+            <li>
+              <Link to="/tables/new" className="nav-link text-white">
+                <FontAwesomeIcon icon={faExternalLinkAlt} />
+                {isHide ? "" : "New Table"}
+              </Link>
+            </li>
+          </ul>
+        </div>
       </div>
     </nav>
   )

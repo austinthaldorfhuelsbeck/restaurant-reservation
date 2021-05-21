@@ -146,12 +146,12 @@ export default function NewReservation() {
               />
             </div>
           </div>
-          <button type="submit" className="btn btn-outline-secondary m-2">
+          <button type="submit" className="btn btn-outline-dark m-2">
             Submit
           </button>
           <button
             onClick={handleCancel}
-            className="btn btn-outline-secondary m-2"
+            className="btn btn-outline-secondary m-2 ml-4"
           >
             Cancel
           </button>
