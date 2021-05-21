@@ -12,6 +12,8 @@ h5 {
 
 h6 { font-family: "Source Code Pro", monospace }
 
+a { color: #000 }
+
 .occupied, .free {
   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   font-size: 1.5rem;
@@ -30,7 +32,7 @@ header {
   box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.2);
 }
 
-.side-bar { min-width: 300px; }
+.min-width { min-width: 300px; }
 
 .side-bar, .bg-dark { background-color: #212529!important; }
 
@@ -45,6 +47,6 @@ hr {
 
 .form-component form { max-width: 750px; }
 
-/* .list-group { border: none; } */
+.rotate { transform: rotate(90deg); }
 
 .side-bar .svg-inline--fa { margin-right: 1rem; }

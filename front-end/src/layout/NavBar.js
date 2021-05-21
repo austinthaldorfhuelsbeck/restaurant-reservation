@@ -1,3 +1,6 @@
+import React from "react"
+import { Link } from "react-router-dom"
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUtensils, faSearch } from "@fortawesome/free-solid-svg-icons"
 
@@ -6,23 +9,18 @@ export default function NavBar() {
     <nav className="container-fluid d-grid gap-3 align-items-center">
       <div className="row justify-content-between">
         <div className="col col-2 col-md-1 bg-info py-3">
-          <FontAwesomeIcon
-            icon={faUtensils}
-            size="2x"
-            className="text-light ml-2"
-          />
+          <Link to="/dashboard">
+            <FontAwesomeIcon
+              icon={faUtensils}
+              size="2x"
+              className="text-light ml-2"
+            />
+          </Link>
         </div>
-        <div className="col col-8 py-3">
-          <div className="d-flex align-items-right">
-            <form className="w-100 me-3">
-              <input
-                type="search"
-                className="form-control"
-                placeholder="Search..."
-              />
-            </form>
-            <FontAwesomeIcon icon={faSearch} className="my-2 ml-2" size="lg" />
-          </div>
+        <div className="d-flex align-items-right">
+          <Link to="/search">
+            <FontAwesomeIcon icon={faSearch} className="mt-4 mr-5" size="lg" />
+          </Link>
         </div>
       </div>
     </nav>

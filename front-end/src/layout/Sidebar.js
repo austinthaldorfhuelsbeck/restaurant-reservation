@@ -1,5 +1,4 @@
 import React from "react"
-
 import { Link } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 // TODO: consolidate this import
@@ -16,38 +15,46 @@ import {
  * @returns {JSX.Element}
  */
 
-export default function SideBar() {
+export default function SideBar({ isHide, setIsHide }) {
+  const handleHide = () => {
+    setIsHide(!isHide)
+  }
+
   return (
     <nav>
       <div className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark">
-        <Link
-          to="/"
-          className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
-        >
+        <div className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
           <div className="fs-4">
-            <FontAwesomeIcon icon={faThumbtack} />
+            <FontAwesomeIcon
+              icon={faThumbtack}
+              onClick={handleHide}
+              className={isHide ? "rotate" : ""}
+            />
           </div>
-        </Link>
+        </div>
         <hr />
         <ul className="nav nav-pills flex-column mb-auto">
           <li>
             <Link to="/dashboard" className="nav-link text-white">
-              <FontAwesomeIcon icon={faCompass} /> Dashboard
+              <FontAwesomeIcon icon={faCompass} />
+              {isHide ? "" : "Dashboard"}
             </Link>
           </li>
           <li>
             <Link to="/search" className="nav-link text-white">
-              <FontAwesomeIcon icon={faSearch} /> Search
+              <FontAwesomeIcon icon={faSearch} /> {isHide ? "" : "Search"}
             </Link>
           </li>
           <li>
             <Link to="/reservations/new" className="nav-link text-white">
-              <FontAwesomeIcon icon={faExternalLinkAlt} /> New Reservation
+              <FontAwesomeIcon icon={faExternalLinkAlt} />
+              {isHide ? "" : "New Reservation"}
             </Link>
           </li>
           <li>
             <Link to="/tables/new" className="nav-link text-white">
-              <FontAwesomeIcon icon={faExternalLinkAlt} /> New Table
+              <FontAwesomeIcon icon={faExternalLinkAlt} />
+              {isHide ? "" : "New Table"}
             </Link>
           </li>
         </ul>

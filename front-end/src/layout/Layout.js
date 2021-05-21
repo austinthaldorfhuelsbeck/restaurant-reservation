@@ -1,4 +1,4 @@
-import React, { Fragment } from "react"
+import React, { Fragment, useState } from "react"
 import NavBar from "./NavBar"
 import SideBar from "./SideBar"
 import Routes from "./Routes"
@@ -11,6 +11,8 @@ import Routes from "./Routes"
  * @returns {JSX.Element}
  */
 function Layout() {
+  const [isHide, setIsHide] = useState(false)
+
   return (
     <Fragment>
       <header className="mb-3 border-bottom">
@@ -18,8 +20,12 @@ function Layout() {
       </header>
       <div className="container-fluid">
         <div className="row h-100">
-          <div className="col-md-2 side-bar">
-            <SideBar />
+          <div
+            className={
+              isHide ? "col-md-1 side-bar" : "col-md-3 side-bar min-width"
+            }
+          >
+            <SideBar isHide={isHide} setIsHide={setIsHide} />
           </div>
           <div className="col">
             <Routes />
