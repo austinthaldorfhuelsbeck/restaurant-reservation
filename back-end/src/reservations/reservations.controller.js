@@ -103,6 +103,11 @@ function read(req, res) {
   res.json({ data })
 }
 async function update(req, res) {
+  console.log("Reservation", req.body.data)
+  const data = await service.update(reservation, reservation.reservation_id)
+  res.json({ data })
+}
+async function updateStatus(req, res) {
   const { reservation } = res.locals
   const { status } = req.body.data
   reservation.status = status
@@ -120,4 +125,5 @@ module.exports = {
   ],
   read: [asyncErrorBoundary(reservationExists), read],
   update: [asyncErrorBoundary(reservationExists), update],
+  updateStatus: [asyncErrorBoundary(reservationExists), updateStatus],
 }
