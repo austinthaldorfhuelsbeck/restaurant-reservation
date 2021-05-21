@@ -19,23 +19,21 @@ export default function SeatReservation() {
   const [reservation, setReservation] = useState([])
   const [reservationError, setReservationError] = useState(null)
 
+  // LOAD tables and reservation on paint
   useEffect(() => {
     loadTables()
-    loadReservation()
   }, [])
-
+  useEffect(() => {
+    setReservationError(null)
+    readReservation(reservation_id)
+      .then(setReservation)
+      .catch(setReservationError)
+  }, [reservation_id])
   const loadTables = () => {
     const abortController = new AbortController()
     setTablesError(null)
     listTables(abortController.signal).then(setTables).catch(setTablesError)
     return () => abortController.abort()
-  }
-
-  const loadReservation = () => {
-    setReservationError(null)
-    readReservation(reservation_id)
-      .then(setReservation)
-      .catch(setReservationError)
   }
 
   // HANDLERS

@@ -40,7 +40,7 @@ export default function Table({ table, setRefresh = false }) {
       <div className="m-2" data-table-id-status={table.table_id}>
         {isOccupied ? (
           <div className="d-flex justify-content-between">
-            <span class="badge bg-danger my-auto">
+            <span className="badge bg-danger my-auto">
               <h5>Occupied by #{table.reservation_id}</h5>
             </span>
             <button
@@ -52,7 +52,7 @@ export default function Table({ table, setRefresh = false }) {
             </button>
           </div>
         ) : (
-          <span class="badge bg-success">
+          <span className="badge bg-success">
             <h5>Available</h5>
           </span>
         )}
