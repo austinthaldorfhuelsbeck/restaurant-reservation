@@ -17,11 +17,10 @@ export default function NavBar() {
             />
           </Link>
         </div>
-        <div className="d-flex align-items-right">
-          <Link to="/search">
-            <FontAwesomeIcon icon={faSearch} className="mt-4 mr-5" size="lg" />
-          </Link>
-        </div>
+        <h4 className="my-auto text-muted">Periodic Tables</h4>
+        <Link to="/search">
+          <FontAwesomeIcon icon={faSearch} className="mt-4 mr-5" size="lg" />
+        </Link>
       </div>
     </nav>
   )
