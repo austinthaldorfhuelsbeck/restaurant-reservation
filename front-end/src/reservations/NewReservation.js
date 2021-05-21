@@ -20,14 +20,20 @@ export default function NewReservation() {
 
   // Allows the ability to edit a reservation instead
   const { reservation_id } = useParams()
-  useEffect(loadReservation, [reservation_id, loadReservation])
+  useEffect(loadReservation, [reservation_id])
 
   function loadReservation() {
     setReservationsError(null)
-
-    readReservation(reservation_id)
-      .then(setFormData)
-      .catch(setReservationsError)
+    if (reservation_id) {
+      readReservation(reservation_id)
+        .then((reservation) => {
+          setFormData({
+            ...reservation,
+            reservation_date: reservation.reservation_date.slice(0, 10),
+          })
+        })
+        .catch(setReservationsError)
+    }
   }
 
   // HANDLERS
@@ -41,10 +47,17 @@ export default function NewReservation() {
     e.preventDefault()
     // console.log(formData)
     try {
-      await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/reservations`,
-        formData
-      )
+      if (reservation_id) {
+        await axios.put(
+          `${process.env.REACT_APP_API_BASE_URL}/reservations`,
+          formData
+        )
+      } else {
+        await axios.post(
+          `${process.env.REACT_APP_API_BASE_URL}/reservations`,
+          formData
+        )
+      }
       history.push(`/dashboard?date=${formData.reservation_date}`)
     } catch (err) {
       if (err.response) {
