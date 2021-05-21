@@ -4,25 +4,37 @@ const asyncErrorBoundary = require("../errors/asyncErrorBoundary")
 /**
  * Validation
  */
+async function reservationExists(req, res, next) {
+  const reservationsList = await service.read(req.params.reservation_id)
+  const reservation = reservationsList[0]
+  if (reservation) {
+    res.locals.reservation = reservation
+    return next()
+  }
+  next({
+    status: 404,
+    message: `Reservation ${req.params.reservation_id} cannot be found.`,
+  })
+}
 function isValidReservation(req, res, next) {
   const reservation = { ...req.body }
   if (!reservation.first_name) {
-    return next({ status: 400, message: "First name is required." })
+    return next({ status: 400, message: "first_name is required." })
   }
   if (!reservation.last_name) {
-    return next({ status: 400, message: "Last name is required." })
+    return next({ status: 400, message: "last_name is required." })
   }
   if (!reservation.mobile_number) {
-    return next({ status: 400, message: "Mobile number is required." })
+    return next({ status: 400, message: "mobile_number is required." })
   }
   if (!reservation.reservation_date) {
-    return next({ status: 400, message: "Reservation date is required." })
+    return next({ status: 400, message: "reservation_date is required." })
   }
   if (!reservation.reservation_time) {
-    return next({ status: 400, message: "Reservation time is required." })
+    return next({ status: 400, message: "reservation_time is required." })
   }
   if (!reservation.people) {
-    return next({ status: 400, message: "Party size is required." })
+    return next({ status: 400, message: "people is required." })
   }
   res.locals.reservation = reservation
   return next()
@@ -32,7 +44,7 @@ function isTuesday(req, res, next) {
   const date = new Date(reqDate)
   // console.log("Date: ", date)
   const dateString = date.toDateString()
-  // TODO: FIX One day behind for some reason??
+  // TODO: FIX One day behind
   // console.log("Date string: ", dateString)
   if (dateString.includes("Mon")) {
     return next({ status: 400, message: "Restaurant is closed on Tuesdays." })
@@ -73,13 +85,33 @@ function isValidTime(req, res, next) {
  */
 async function list(req, res) {
   const date = req.query.date
-  const data = date ? await service.listDate(date) : await service.list()
+  const mobile_phone = req.query.mobile_phone
+  let data = []
+  if (!date && !mobile_phone) data = await service.list()
+  if (date) data = await service.listDate(date)
+  if (mobile_phone) data = await service.search(mobile_phone)
   res.json({ data })
 }
 async function create(req, res) {
   const reservation = res.locals.reservation
   // console.log(reservation)
   const data = await service.create(reservation)
+  res.json({ data })
+}
+function read(req, res) {
+  const data = res.locals.reservation
+  res.json({ data })
+}
+async function update(req, res) {
+  console.log("Reservation", req.body.data)
+  const data = await service.update(reservation, reservation.reservation_id)
+  res.json({ data })
+}
+async function updateStatus(req, res) {
+  const { reservation } = res.locals
+  const { status } = req.body.data
+  reservation.status = status
+  const data = await service.update(reservation, reservation.reservation_id)
   res.json({ data })
 }
 
@@ -91,4 +123,7 @@ module.exports = {
     isValidTime,
     create,
   ],
+  read: [asyncErrorBoundary(reservationExists), read],
+  update: [asyncErrorBoundary(reservationExists), update],
+  updateStatus: [asyncErrorBoundary(reservationExists), updateStatus],
 }

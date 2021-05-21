@@ -1,5 +1,7 @@
 const service = require("./tables.service")
+const reservationService = require("../reservations/reservations.service")
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary")
+const { destroy } = require("../db/connection")
 
 /**
  * Validation
@@ -26,10 +28,38 @@ async function tableExists(req, res, next) {
   const table = tableList[0]
   if (table) {
     res.locals.table = table
-    console.log("Table exists!")
     return next()
   }
-  next({ status: 404, message: "Table cannot be found." })
+  next({
+    status: 404,
+    message: `Table ${req.params.table_id} cannot be found.`,
+  })
+}
+function isAvailable(req, res, next) {
+  const { table } = res.locals
+  if (table.reservation_id === null) {
+    return next()
+  }
+  next({ status: 400, message: "Table is already occupied." })
+}
+function isUnavailable(req, res, next) {
+  const { table } = res.locals
+  if (table.reservation_id !== null) {
+    return next()
+  }
+  next({ status: 400, message: "Table is already available." })
+}
+async function isLargeEnough(req, res, next) {
+  const { table } = res.locals
+  const id = req.body.data.reservation_id
+  const reservation = await reservationService.read(id)
+  if (reservation[0].people > table.capacity) {
+    return next({
+      status: 400,
+      message: "Table is not large enough for party size.",
+    })
+  }
+  next()
 }
 
 /**
@@ -48,18 +78,33 @@ function read(req, res) {
   const { table } = res.locals
   res.json({ data: table })
 }
-async function update(req, res) {
+async function updateTableAssignment(req, res) {
   const { table } = res.locals
   const { reservation_id } = req.body.data
-  const updatedTable = { ...table, ...reservation_id }
-  const id = table.table_id
-  const data = await service.update(updatedTable, id)
+  table.reservation_id = reservation_id
+  const data = await service.update(table, table.table_id)
+  res.json({ data })
+}
+async function destroyTableAssignment(req, res) {
+  const { table } = res.locals
+  table.reservation_id = null
+  const data = await service.update(table, table.table_id)
   res.json({ data })
 }
 
 module.exports = {
   list: [asyncErrorBoundary(list)],
   create: [asyncErrorBoundary(isValidTable), create],
-  read,
-  update: [asyncErrorBoundary(tableExists), update],
+  read: [asyncErrorBoundary(tableExists), read],
+  update: [
+    asyncErrorBoundary(tableExists),
+    isAvailable,
+    isLargeEnough,
+    updateTableAssignment,
+  ],
+  delete: [
+    asyncErrorBoundary(tableExists),
+    isUnavailable,
+    destroyTableAssignment,
+  ],
 }

@@ -2,8 +2,6 @@ import axios from "axios"
 import { useState } from "react"
 import { useHistory } from "react-router-dom"
 import ErrorAlert from "../layout/ErrorAlert"
-// TODO: environment variables
-const BASE_API_URL = "http://localhost:5000" // "https://restaurant-reservation-api.vercel.app"
 
 export default function NewTable() {
   const initialFormState = {
@@ -24,7 +22,10 @@ export default function NewTable() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      await axios.post(`${BASE_API_URL}/tables/new`, formData)
+      await axios.post(
+        `${process.env.REACT_APP_API_BASE_URL}/tables/new`,
+        formData
+      )
       history.push("/dashboard")
     } catch (err) {
       if (err.response) {
@@ -37,37 +38,44 @@ export default function NewTable() {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="table_name">Table Name</label>
-          <input
-            type="text"
-            className="form-control"
-            id="table_name"
-            placeholder="Name of the table"
-            onChange={handleChange}
-            value={formData.table_name}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="capacity">Capacity</label>
-          <input
-            type="number"
-            className="form-control"
-            id="capacity"
-            onChange={handleChange}
-            value={formData.capacity}
-          />
-        </div>
-        <button type="submit" className="btn btn-outline-primary">
-          Submit
-        </button>
-        <button onClick={handleCancel} className="btn btn-outline-primary">
-          Cancel
-        </button>
-      </form>
-      <ErrorAlert error={reservationsError} />
+    <div className="component">
+      <h1>New Table</h1>
+      <hr />
+      <div className="form-component m-5">
+        <form onSubmit={handleSubmit}>
+          <div className="form-group col col-md-8 col-lg-6">
+            <label htmlFor="table_name">Table Name</label>
+            <input
+              type="text"
+              className="form-control"
+              id="table_name"
+              placeholder="Name of the table"
+              onChange={handleChange}
+              value={formData.table_name}
+            />
+          </div>
+          <div className="form-group col col-md-4 col-lg-2">
+            <label htmlFor="capacity">Capacity</label>
+            <input
+              type="number"
+              className="form-control"
+              id="capacity"
+              onChange={handleChange}
+              value={formData.capacity}
+            />
+          </div>
+          <button type="submit" className="btn btn-outline-dark m-2">
+            Submit
+          </button>
+          <button
+            onClick={handleCancel}
+            className="btn btn-outline-secondary m-2 ml-4"
+          >
+            Cancel
+          </button>
+        </form>
+        <ErrorAlert error={reservationsError} />
+      </div>
     </div>
   )
 }

@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react"
 import { listReservations, listTables } from "../utils/api"
 
-import Reservation from "./Components/Reservation"
-import Table from "./Components/Table"
 import ErrorAlert from "../layout/ErrorAlert"
 import DashboardNav from "./DashboardNav"
+import ListReservations from "./Components/ListReservations"
+import ListTables from "./Components/ListTables"
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import {
+  faTachometerAlt,
+  faCalendarAlt,
+} from "@fortawesome/free-solid-svg-icons"
 
 /**
  *  Defines the dashboard page.
@@ -17,8 +23,9 @@ export default function Dashboard({ date }) {
   const [reservationsError, setReservationsError] = useState(null)
   const [tables, setTables] = useState([])
   const [tablesError, setTablesError] = useState(null)
+  const [refresh, setRefresh] = useState(false)
 
-  useEffect(loadDashboard, [date])
+  useEffect(loadDashboard, [date, refresh])
 
   function loadDashboard() {
     const abortController = new AbortController()
@@ -26,40 +33,46 @@ export default function Dashboard({ date }) {
 
     listReservations({ date }, abortController.signal)
       .then(setReservations)
+      .then((res) => {
+        setRefresh(false)
+      })
       .catch(setReservationsError)
     listTables(abortController.signal).then(setTables).catch(setTablesError)
 
     return () => abortController.abort()
   }
 
-  const reservationsList = reservations.map((reservation, index) => (
-    <div key={index}>
-      <Reservation reservation={reservation} />
-    </div>
-  ))
-
-  const tablesList = tables.map((table, index) => (
-    <div key={index}>
-      <Table table={table} />
-    </div>
-  ))
-
   return (
-    <main>
-      <h1>Dashboard</h1>
-      <div className="container">
-        <h3>Date: {date}</h3>
-        <h4>Reservations:</h4>
-        <div className="col col-md-6 py-3">
-          <ErrorAlert error={reservationsError} />
-          {reservationsList}
+    <main className="container">
+      <div className="row">
+        <div className="col col-6">
+          <h1>
+            <FontAwesomeIcon
+              icon={faTachometerAlt}
+              size="sm"
+              className="mr-2"
+            />
+            Dashboard
+          </h1>
+          <h4>
+            <FontAwesomeIcon icon={faCalendarAlt} size="sm" /> {date}
+          </h4>
         </div>
-        <h4>Tables:</h4>
-        <div className="col col-md-6 py-3">
-          <ErrorAlert error={tablesError} />
-          {tablesList}
+      </div>
+      <hr />
+      <div className="row">
+        <div className="col col-12 col-lg-6">
+          <DashboardNav date={date} />
+          <ListReservations
+            reservations={reservations}
+            setRefresh={setRefresh}
+          />
         </div>
-        <DashboardNav date={date} />
+        <div className="col col-12 col-lg-6">
+          <ListTables tables={tables} setRefresh={setRefresh} />
+        </div>
+        <ErrorAlert error={reservationsError} />
+        <ErrorAlert error={tablesError} />
       </div>
     </main>
   )
