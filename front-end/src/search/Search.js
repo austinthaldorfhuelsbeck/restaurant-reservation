@@ -4,7 +4,7 @@ import ErrorAlert from "../layout/ErrorAlert"
 import ListReservations from "../dashboard/Components/ListReservations"
 
 export default function Search() {
-  const [formData, setFormData] = useState({ mobile_number: "" })
+  const [formData, setFormData] = useState({ mobile_phone: "" })
   const [results, setResults] = useState([])
   const [searchError, setSearchError] = useState(null)
 
@@ -17,11 +17,11 @@ export default function Search() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/reservations?mobile_phone=${formData.mobile_number}`,
-        formData
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_BASE_URL}/reservations?mobile_phone=${formData.mobile_phone}`
       )
-      setResults(response)
+      setResults(response.data.data)
+      // console.log("Response", response.data.data, "Results", results)
     } catch (err) {
       if (err.response) {
         setSearchError(err.response.data)
@@ -37,7 +37,7 @@ export default function Search() {
         <form onSubmit={handleSubmit}>
           <div className="row">
             <div className="form-group col-12 col-md-8 col-lg-6">
-              <label htmlFor="mobile_number">Mobile Number</label>
+              <label htmlFor="mobile_phone">Mobile Phone</label>
               <input
                 type="tel"
                 className="form-control"

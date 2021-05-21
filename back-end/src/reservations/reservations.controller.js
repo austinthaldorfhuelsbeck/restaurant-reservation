@@ -86,7 +86,7 @@ function isValidTime(req, res, next) {
 async function list(req, res) {
   const date = req.query.date
   const mobile_phone = req.query.mobile_phone
-  let data
+  let data = []
   if (!date && !mobile_phone) data = await service.list()
   if (date) data = await service.listDate(date)
   if (mobile_phone) data = await service.search(mobile_phone)
