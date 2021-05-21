@@ -53,10 +53,13 @@ async function isLargeEnough(req, res, next) {
   const { table } = res.locals
   const id = req.body.data.reservation_id
   const reservation = await reservationService.read(id)
-  if (reservation[0].people < table.capacity) {
-    return next()
+  if (reservation[0].people > table.capacity) {
+    return next({
+      status: 400,
+      message: "Table is not large enough for party size.",
+    })
   }
-  next({ status: 400, message: "Table is not large enough for party size." })
+  next()
 }
 
 /**
