@@ -1,6 +1,8 @@
 import axios from "axios"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { useHistory, useParams } from "react-router-dom"
+
+import { readReservation } from "../utils/api"
 import ErrorAlert from "../layout/ErrorAlert"
 
 export default function NewReservation() {
@@ -18,7 +20,15 @@ export default function NewReservation() {
 
   // Allows the ability to edit a reservation instead
   const { reservation_id } = useParams()
-  console.log(reservation_id)
+  useEffect(loadReservation, [reservation_id, loadReservation])
+
+  function loadReservation() {
+    setReservationsError(null)
+
+    readReservation(reservation_id)
+      .then(setFormData)
+      .catch(setReservationsError)
+  }
 
   // HANDLERS
   const handleChange = ({ target }) => {
