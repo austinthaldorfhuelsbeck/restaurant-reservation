@@ -1,6 +1,6 @@
 import axios from "axios"
 import React, { useState } from "react"
-import { useHistory } from "react-router-dom"
+import { useHistory, useParams } from "react-router-dom"
 import ErrorAlert from "../layout/ErrorAlert"
 
 export default function NewReservation() {
@@ -15,6 +15,10 @@ export default function NewReservation() {
   const history = useHistory()
   const [formData, setFormData] = useState({ ...initialFormState })
   const [reservationsError, setReservationsError] = useState(null)
+
+  // Allows the ability to edit a reservation instead
+  const { reservation_id } = useParams()
+  console.log(reservation_id)
 
   // HANDLERS
   const handleChange = ({ target }) => {
@@ -44,7 +48,7 @@ export default function NewReservation() {
 
   return (
     <div className="component">
-      <h1>New Reservation</h1>
+      <h1>Reservation Details</h1>
       <hr />
       <div className="form-component m-5">
         <form onSubmit={handleSubmit}>

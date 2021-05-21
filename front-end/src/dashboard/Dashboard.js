@@ -53,7 +53,10 @@ export default function Dashboard({ date }) {
       <div className="row">
         <div className="col col-12 col-lg-6">
           <DashboardNav date={date} />
-          <ListReservations reservations={reservations} />
+          <ListReservations
+            reservations={reservations}
+            setRefresh={setRefresh}
+          />
         </div>
         <div className="col col-12 col-lg-6">
           <ListTables tables={tables} setRefresh={setRefresh} />
