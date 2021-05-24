@@ -38,12 +38,12 @@ export default function Reservation({ reservation, setRefresh }) {
   }
 
   const seatButton = reservation.status === "booked" && (
-    <a href={`/reservations/${reservation.reservation_id}/seat`}>
-      <button className="btn btn-outline-dark">
+    <button className="btn btn-outline-dark">
+      <a href={`/reservations/${reservation.reservation_id}/seat`}>
         <FontAwesomeIcon icon={faChair} className="mr-2" />
         Seat
-      </button>
-    </a>
+      </a>
+    </button>
   )
   const editButton = reservation.status === "booked" && (
     <a href={`/reservations/${reservation.reservation_id}/edit`}>

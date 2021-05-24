@@ -16,14 +16,12 @@ export default function NewTable() {
   const handleChange = ({ target }) => {
     setFormData({
       ...formData,
-      [target.id]: target.value,
+      [target.name]: target.value,
     })
   }
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      console.log(process.env)
-      console.log(process.env.REACT_APP_API_BASE_URL)
       await axios.post(
         `${process.env.REACT_APP_API_BASE_URL}/tables/new`,
         formData
@@ -50,7 +48,7 @@ export default function NewTable() {
             <input
               type="text"
               className="form-control"
-              id="table_name"
+              name="table_name"
               placeholder="Name of the table"
               onChange={handleChange}
               value={formData.table_name}
@@ -61,7 +59,7 @@ export default function NewTable() {
             <input
               type="number"
               className="form-control"
-              id="capacity"
+              name="capacity"
               onChange={handleChange}
               value={formData.capacity}
             />

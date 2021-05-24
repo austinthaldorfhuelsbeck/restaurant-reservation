@@ -48,8 +48,9 @@ export default function NewReservation() {
     // console.log(formData)
     try {
       if (reservation_id) {
+        console.log(formData)
         await axios.put(
-          `${process.env.REACT_APP_API_BASE_URL}/reservations`,
+          `${process.env.REACT_APP_API_BASE_URL}/reservations/${reservation_id}`,
           formData
         )
       } else {
@@ -58,9 +59,10 @@ export default function NewReservation() {
           formData
         )
       }
-      history.push(`/dashboard?date=${formData.reservation_date}`)
+      // history.push(`/dashboard?date=${formData.reservation_date}`)
     } catch (err) {
       if (err.response) {
+        console.log(err.response)
         setReservationsError(err.response.data)
       }
     }
