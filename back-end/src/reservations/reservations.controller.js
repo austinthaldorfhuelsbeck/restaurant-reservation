@@ -65,7 +65,7 @@ function isValidTime(req, res, next) {
     })
   }
 
-  // Compare request's time to restaurant's hours
+  // Compare the request's time to restaurant's hours
   const hours = Number(reqTime.slice(0, 2))
   const minutes = Number(reqTime.slice(3))
   const timeNum = hours * 60 + minutes
