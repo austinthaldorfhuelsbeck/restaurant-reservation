@@ -7,18 +7,21 @@ const { destroy } = require("../db/connection")
  * Validation
  */
 function isValidTable(req, res, next) {
-  const table = { ...req.body }
-  if (table.table_name.length < 2) {
-    return next({
-      status: 400,
-      message: "Table name must be at least two characters.",
-    })
-  }
-  if (table.capacity < 1) {
-    return next({
-      status: 400,
-      message: "Capacity must be at least one.",
-    })
+  const table = { ...req.body.data }
+  table.capacity = Number(table.capacity)
+  let message = ""
+  if (!table.table_name || table.table_name.length < 2)
+    message += "table_name must be at least two characters. "
+  if (
+    !table.capacity ||
+    table.capacity < 1 ||
+    typeof table.capacity != "number"
+  )
+    message += "capacity must be at least one. "
+  // returns error or sets res.locals
+  if (message !== "") {
+    // console.log("message:", message)
+    return next({ status: 400, message })
   }
   res.locals.table = table
   return next()
@@ -47,16 +50,36 @@ function isUnavailable(req, res, next) {
   if (table.reservation_id !== null) {
     return next()
   }
-  next({ status: 400, message: "Table is already available." })
+  next({ status: 400, message: "Table is not occupied." })
 }
 async function isLargeEnough(req, res, next) {
   const { table } = res.locals
-  const id = req.body.data.reservation_id
-  const reservation = await reservationService.read(id)
-  if (reservation[0].people > table.capacity) {
+  if (req.body.data) {
+    const id = req.body.data.reservation_id
+    if (id) {
+      const reservation = await reservationService.read(id)
+      if (!reservation[0]) {
+        return next({
+          status: 404,
+          message: `table ${id} not found.`,
+        })
+      }
+      if (reservation[0].people > table.capacity) {
+        return next({
+          status: 400,
+          message: "table capacity is not large enough for party size.",
+        })
+      }
+    } else {
+      return next({
+        status: 400,
+        message: "invalid reservation_id. ",
+      })
+    }
+  } else {
     return next({
       status: 400,
-      message: "Table is not large enough for party size.",
+      message: "no data provided.",
     })
   }
   next()
@@ -72,7 +95,7 @@ async function list(req, res) {
 async function create(req, res) {
   const { table } = res.locals
   const data = await service.create(table)
-  res.json({ data })
+  res.status(201).json({ data })
 }
 function read(req, res) {
   const { table } = res.locals
@@ -80,8 +103,7 @@ function read(req, res) {
 }
 async function updateTableAssignment(req, res) {
   const { table } = res.locals
-  const { reservation_id } = req.body.data
-  table.reservation_id = reservation_id
+  if (req.body.data) table.reservation_id = req.body.data.reservation_id
   const data = await service.update(table, table.table_id)
   res.json({ data })
 }
