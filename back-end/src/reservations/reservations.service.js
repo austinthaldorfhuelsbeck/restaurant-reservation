@@ -4,7 +4,7 @@ const knex = require("../db/connection")
  * List + listDate service for reservation resources
  */
 function list() {
-  return knex("reservations as r").select("*").orderBy("r.reservation_time")
+  return knex("reservations").select("*").orderBy("reservation_time")
 }
 
 function listDate(date) {
