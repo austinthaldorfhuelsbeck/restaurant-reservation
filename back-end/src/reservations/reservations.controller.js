@@ -2,8 +2,15 @@ const service = require("./reservations.service")
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary")
 
 /**
- * Validation
+ * Defines the controller for reservation resources
+ * Includes validation for existing and new reservations
+ * Includes list, create, read, update methods as well as a method to update status only
+ * but does not include delete
+ *
+ * @type {Router}
  */
+
+// VALIDATION
 async function reservationExists(req, res, next) {
   const reservationsList = await service.read(req.params.reservation_id)
   const reservation = reservationsList[0]
