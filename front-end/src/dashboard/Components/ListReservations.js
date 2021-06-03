@@ -6,11 +6,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons"
 
 export default function ListReservations({ reservations, setRefresh }) {
-  // console.log("Reservations:", reservations)
   const [toggle, setToggle] = useState(true)
 
   const renderList = () => {
-    // console.log("Reservations", reservations)
     if (!toggle || reservations.length === 0) return null
     return reservations.map((reservation, index) => {
       if (

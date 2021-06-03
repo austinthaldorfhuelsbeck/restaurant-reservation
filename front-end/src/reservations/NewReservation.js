@@ -45,7 +45,6 @@ export default function NewReservation() {
   }
   const handleSubmit = async (e) => {
     e.preventDefault()
-    // console.log(formData)
     try {
       if (reservation_id) {
         await axios.put(

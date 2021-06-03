@@ -21,7 +21,6 @@ export default function Search() {
         `${process.env.REACT_APP_API_BASE_URL}/reservations?mobile_phone=${formData.mobile_phone}`
       )
       setResults(response.data.data)
-      // console.log("Response", response.data.data, "Results", results)
     } catch (err) {
       if (err.response) {
         setSearchError(err.response.data)
