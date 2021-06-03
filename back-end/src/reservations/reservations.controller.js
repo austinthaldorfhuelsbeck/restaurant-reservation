@@ -12,7 +12,13 @@ const asyncErrorBoundary = require("../errors/asyncErrorBoundary")
 
 // VALIDATION
 async function reservationExists(req, res, next) {
-  const reservationsList = await service.read(req.params.reservation_id)
+  let id = ""
+  if (req.params.reservation_id) {
+    id = req.params.reservation_id
+  } else {
+    id = req.body.data.reservation_id
+  }
+  const reservationsList = await service.read(id)
   const reservation = reservationsList[0]
   if (reservation) {
     res.locals.reservation = reservation
