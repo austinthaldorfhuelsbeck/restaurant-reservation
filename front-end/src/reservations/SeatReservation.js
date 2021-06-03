@@ -91,7 +91,7 @@ export default function SeatReservation() {
               onChange={handleChange}
               value={formData.table_id}
             >
-              <option selected>Select a Table</option>
+              <option value={formData}>Select a Table</option>
               {tablesList}
             </select>
           </div>

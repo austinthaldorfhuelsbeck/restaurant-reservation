@@ -5,7 +5,7 @@ const knex = require("../db/connection")
  * Create returns a list, of which we only need the first element
  */
 function list() {
-  return knex("tables").select("*")
+  return knex("tables").select("*").orderBy("tables.table_name")
 }
 function create(table) {
   return knex("tables")

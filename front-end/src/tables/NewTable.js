@@ -22,10 +22,9 @@ export default function NewTable() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/tables/new`,
-        formData
-      )
+      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/tables/new`, {
+        data: formData,
+      })
       history.push("/dashboard")
     } catch (err) {
       if (err.response) {

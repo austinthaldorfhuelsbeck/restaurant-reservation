@@ -14,7 +14,6 @@ import {
 import { convertFromMilitary } from "../../utils/date-time"
 
 export default function Reservation({ reservation, setRefresh }) {
-  // console.log("Reservation:", reservation)
   const [cancelError, setCancelError] = useState(null)
 
   const handleCancel = async () => {

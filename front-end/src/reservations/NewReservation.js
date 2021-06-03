@@ -47,15 +47,13 @@ export default function NewReservation() {
     e.preventDefault()
     try {
       if (reservation_id) {
-        await axios.put(
-          `${process.env.REACT_APP_API_BASE_URL}/reservations`,
-          formData
-        )
+        await axios.put(`${process.env.REACT_APP_API_BASE_URL}/reservations`, {
+          data: formData,
+        })
       } else {
-        await axios.post(
-          `${process.env.REACT_APP_API_BASE_URL}/reservations`,
-          formData
-        )
+        await axios.post(`${process.env.REACT_APP_API_BASE_URL}/reservations`, {
+          data: formData,
+        })
       }
       history.push(`/dashboard?date=${formData.reservation_date}`)
     } catch (err) {
