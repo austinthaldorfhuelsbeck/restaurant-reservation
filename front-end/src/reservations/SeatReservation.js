@@ -7,7 +7,7 @@ import { convertFromMilitary } from "../utils/date-time"
 import ErrorAlert from "../layout/ErrorAlert"
 
 export default function SeatReservation() {
-  const initialFormState = { table_id: 0 }
+  const initialFormState = { table_name: 0 }
   const history = useHistory()
   const { reservation_id } = useParams()
 
@@ -39,19 +39,19 @@ export default function SeatReservation() {
   // HANDLERS
   const handleChange = ({ target }) => {
     setFormData({
-      table_id: target.value,
+      table_name: target.value,
     })
   }
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
       await axios.put(
-        `${process.env.REACT_APP_API_BASE_URL}/reservations/${reservation_id}/status`,
-        { data: { status: "seated" } }
+        `${process.env.REACT_APP_API_BASE_URL}/tables/${formData.table_name}/seat`,
+        { data: { reservation_id } }
       )
       await axios.put(
-        `${process.env.REACT_APP_API_BASE_URL}/tables/${formData.table_id}/seat`,
-        { data: { reservation_id } }
+        `${process.env.REACT_APP_API_BASE_URL}/reservations/${reservation_id}/status`,
+        { data: { status: "seated" } }
       )
       history.push("/dashboard")
     } catch (err) {
@@ -83,13 +83,13 @@ export default function SeatReservation() {
       <div className="form-component m-5">
         <form onSubmit={handleSubmit}>
           <div className="col col-12 col-md-7 form-group">
-            <label htmlFor="table_id">Table Number:</label>
+            <label htmlFor="table_name">Table Number:</label>
             <select
-              name="table_id"
+              name="table_name"
               className="form-control"
               aria-label="Select Table Number"
               onChange={handleChange}
-              value={formData.table_id}
+              value={formData.table_name}
             >
               <option value={formData}>Select a Table</option>
               {tablesList}

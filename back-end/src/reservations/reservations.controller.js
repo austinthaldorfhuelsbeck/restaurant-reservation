@@ -120,7 +120,6 @@ function read(req, res) {
   res.json({ data })
 }
 async function update(req, res) {
-  console.log("update")
   const data = await service.update(
     res.locals.reservation,
     res.locals.reservation.reservation_id
