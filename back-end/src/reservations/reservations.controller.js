@@ -42,10 +42,7 @@ function isValidReservation(req, res, next) {
 function isTuesday(req, res, next) {
   const reqDate = res.locals.reservation.reservation_date
   const date = new Date(reqDate)
-  // console.log("Date: ", date)
   const dateString = date.toDateString()
-  // TODO: FIX One day behind
-  // console.log("Date string: ", dateString)
   if (dateString.includes("Mon")) {
     return next({ status: 400, message: "Restaurant is closed on Tuesdays." })
   }
@@ -94,7 +91,6 @@ async function list(req, res) {
 }
 async function create(req, res) {
   const reservation = res.locals.reservation
-  // console.log(reservation)
   const data = await service.create(reservation)
   res.json({ data })
 }
@@ -103,7 +99,6 @@ function read(req, res) {
   res.json({ data })
 }
 async function update(req, res) {
-  console.log("Reservation", req.body.data)
   const data = await service.update(reservation, reservation.reservation_id)
   res.json({ data })
 }
