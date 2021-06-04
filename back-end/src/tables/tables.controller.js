@@ -83,19 +83,6 @@ async function isLargeEnough(req, res, next) {
   }
   next()
 }
-async function isValidReservation(req, res, next) {
-  const reservation = await reservationService.read(
-    res.locals.table.reservation_id
-  )
-  if (reservation) {
-    res.locals.reservation = reservation
-    return next()
-  }
-  return next({
-    status: 400,
-    message: "reservation not found. ",
-  })
-}
 
 /**
  * Handlers for table & seat resources
@@ -115,29 +102,40 @@ function read(req, res) {
 }
 async function updateTableAssignment(req, res) {
   const { table } = res.locals
-  const { reservation } = res.locals
 
   // updates table
   if (req.body.data) table.reservation_id = req.body.data.reservation_id
   const data = await service.update(table, table.table_id)
 
   // updates reservation
-  reservation.status = "seated"
+  const reservationList = await reservationService.read(table.reservation_id)
+  const reservation = reservationList[0]
+  if (reservation.status === "seated") {
+    return next({
+      status: 400,
+      message: "reservation already seated. ",
+    })
+  } else {
+    reservation.status = "seated"
+  }
   await reservationService.update(reservation, reservation.reservation_id)
 
   res.json({ data })
 }
 async function destroyTableAssignment(req, res) {
   const { table } = res.locals
-  const { reservation } = res.locals
+
+  // updates reservation
+  const reservationList = await reservationService.read(table.reservation_id)
+  if (reservationList[0]) {
+    const reservation = reservationList[0]
+    reservation.status = "finished"
+    await reservationService.update(reservation, reservation.reservation_id)
+  }
 
   // updates table
   table.reservation_id = null
   const data = await service.update(table, table.table_id)
-
-  // updates reservation
-  reservation.status = "finished"
-  await reservationService.update(reservation, reservation.reservation_id)
 
   res.json({ data })
 }
@@ -150,13 +148,11 @@ module.exports = {
     asyncErrorBoundary(tableExists),
     isAvailable,
     isLargeEnough,
-    isValidReservation,
     updateTableAssignment,
   ],
   delete: [
     asyncErrorBoundary(tableExists),
     isUnavailable,
-    isValidReservation,
     destroyTableAssignment,
   ],
 }
