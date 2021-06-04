@@ -100,7 +100,7 @@ function read(req, res) {
   const { table } = res.locals
   res.json({ data: table })
 }
-async function updateTableAssignment(req, res) {
+async function updateTableAssignment(req, res, next) {
   const { table } = res.locals
 
   // updates table

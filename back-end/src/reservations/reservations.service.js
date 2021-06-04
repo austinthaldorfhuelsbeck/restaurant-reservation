@@ -11,6 +11,7 @@ function listDate(date) {
   return knex("reservations as r")
     .select("*")
     .where({ "r.reservation_date": date })
+    .whereNot({ "r.status": "finished" })
 }
 
 function search(mobile_number) {

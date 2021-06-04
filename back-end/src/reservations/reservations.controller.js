@@ -102,7 +102,7 @@ function isValidStatus(req, res, next) {
 }
 function isStatusBooked(req, res, next) {
   const status = req.body.data.status
-  if (status === "booked") return next()
+  if (status !== "seated" && status !== "finished") return next()
   return next({
     status: 400,
     message:
