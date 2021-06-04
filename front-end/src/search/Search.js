@@ -4,7 +4,7 @@ import ErrorAlert from "../layout/ErrorAlert"
 import ListReservations from "../dashboard/Components/ListReservations"
 
 export default function Search() {
-  const [formData, setFormData] = useState({ mobile_phone: "" })
+  const [formData, setFormData] = useState({ mobile_number: "" })
   const [results, setResults] = useState([])
   const [searchError, setSearchError] = useState(null)
 
@@ -36,11 +36,11 @@ export default function Search() {
         <form onSubmit={handleSubmit}>
           <div className="row">
             <div className="form-group col-12 col-md-8 col-lg-6">
-              <label htmlFor="mobile_phone">Mobile Phone</label>
+              <label htmlFor="mobile_number">Mobile Phone</label>
               <input
                 type="tel"
                 className="form-control"
-                name="mobile_phone"
+                name="mobile_number"
                 placeholder="Enter a customer's phone number"
                 onChange={handleChange}
                 value={formData.mobile_number}

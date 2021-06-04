@@ -46,6 +46,7 @@ export default function NewReservation() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
+      formData.people = Number(formData.people)
       if (reservation_id) {
         await axios.put(`${process.env.REACT_APP_API_BASE_URL}/reservations`, {
           data: formData,
