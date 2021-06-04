@@ -31,7 +31,7 @@ async function reservationExists(req, res, next) {
 }
 function isValidReservation(req, res, next) {
   const reservation = { ...req.body.data }
-  reservation.people = Number(reservation.people)
+  //reservation.people = Number(reservation.people)
   let message = ""
 
   // form is filled in
@@ -97,7 +97,38 @@ function isValidStatus(req, res, next) {
 
   return next({
     status: 400,
-    message: "unknown status.",
+    message: "status is unknown. ",
+  })
+}
+function isStatusBooked(req, res, next) {
+  const status = req.body.data.status
+  if (status === "booked") return next()
+  return next({
+    status: 400,
+    message:
+      "invalid status for a new reservation (seated and finished are invalid). ",
+  })
+}
+function reservationIsSeated(req, res, next) {
+  if (res.locals.reservation.status !== "finished") return next()
+  return next({
+    status: 400,
+    message: "reservation already finished. ",
+  })
+}
+function canBeUpdated(req, res, next) {
+  if (res.locals.status !== "finished") return next()
+  return next({
+    status: 400,
+    message: "a finished reservation cannot be updated. ",
+  })
+}
+async function isCurrentlyFinished(req, res, next) {
+  const status = await service.read(res.locals.reservation.reservation_id)
+  if (status !== "finished") return next()
+  return next({
+    status: 400,
+    message: "reservation is",
   })
 }
 
@@ -144,11 +175,18 @@ async function updateStatus(req, res) {
 
 module.exports = {
   list: [asyncErrorBoundary(list)],
-  create: [isValidReservation, asyncErrorBoundary(create)],
+  create: [isValidReservation, isStatusBooked, asyncErrorBoundary(create)],
   read: [asyncErrorBoundary(reservationExists), read],
-  update: [asyncErrorBoundary(reservationExists), isValidReservation, update],
+  update: [
+    asyncErrorBoundary(reservationExists),
+    isValidReservation,
+    canBeUpdated,
+    update,
+  ],
   updateStatus: [
     asyncErrorBoundary(reservationExists),
+    reservationIsSeated,
+    isCurrentlyFinished,
     isValidStatus,
     updateStatus,
   ],

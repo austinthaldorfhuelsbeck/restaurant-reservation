@@ -7,8 +7,11 @@ const methodNotAllowed = require("../errors/methodNotAllowed")
  *
  * @type {Router}
  */
-router.route("/").get(controller.list).all(methodNotAllowed)
-router.route("/new").post(controller.create).all(methodNotAllowed)
+router
+  .route("/")
+  .get(controller.list)
+  .post(controller.create)
+  .all(methodNotAllowed)
 router.route("/:table_id").get(controller.read).all(methodNotAllowed)
 router
   .route("/:table_id/seat")
