@@ -10,8 +10,8 @@ export default function ListTables({ tables, setRefresh }) {
 
   const renderList = () => {
     if (!toggle || !tables) return null
-    return tables.map((table, index) => (
-      <li className="list-group-item" key={index}>
+    return tables.map((table) => (
+      <li className="list-group-item" key={table.table_id}>
         <Table table={table} setRefresh={setRefresh} />
       </li>
     ))

@@ -10,14 +10,14 @@ export default function ListReservations({ reservations, setRefresh }) {
 
   const renderList = () => {
     if (!toggle || reservations.length === 0) return null
-    return reservations.map((reservation, index) => {
+    return reservations.map((reservation) => {
       if (
         reservation.status === "finished" ||
         reservation.status === "cancelled"
       )
         return null
       return (
-        <li className="list-group-item" key={index}>
+        <li className="list-group-item" key={reservation.reservation_id}>
           <Reservation reservation={reservation} setRefresh={setRefresh} />
         </li>
       )
