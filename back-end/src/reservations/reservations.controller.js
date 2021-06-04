@@ -133,27 +133,17 @@ async function isCurrentlyFinished(req, res, next) {
     message: "reservation is",
   })
 }
-async function handleSearch(req, res, next) {
-  const mobile_number = req.query.mobile_number
-  if (mobile_number) {
-    let data = []
-    data = await service.search(mobile_number)
-    if (data.length === 0) {
-      return next({
-        status: 400,
-        message: "No reservations found. ",
-      })
-    }
-  }
-  return next()
-}
 
 /**
  * Handlers for reservation resources
  */
-async function list(req, res, next) {
+async function list(req, res) {
   const date = req.query.date
-  if (date) {
+  const mobile_number = req.query.mobile_number
+  let data = []
+  if (mobile_number) {
+    data = await service.search(mobile_number)
+  } else if (date) {
     data = await service.listDate(date)
   } else {
     data = await service.list()
@@ -186,7 +176,7 @@ async function updateStatus(req, res) {
 }
 
 module.exports = {
-  list: [asyncErrorBoundary(handleSearch), list],
+  list: [asyncErrorBoundary(list)],
   create: [isValidReservation, isStatusBooked, asyncErrorBoundary(create)],
   read: [asyncErrorBoundary(reservationExists), read],
   update: [

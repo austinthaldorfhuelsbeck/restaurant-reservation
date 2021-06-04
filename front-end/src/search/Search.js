@@ -21,6 +21,9 @@ export default function Search() {
         `${process.env.REACT_APP_API_BASE_URL}/reservations?mobile_number=${formData.mobile_number}`
       )
       setResults(response.data.data)
+      if (results.length === 0) {
+        setSearchError({ error: "No reservations found. " })
+      }
     } catch (err) {
       if (err.response) {
         setSearchError(err.response.data)
