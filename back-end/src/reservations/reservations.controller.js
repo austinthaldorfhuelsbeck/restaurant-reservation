@@ -45,7 +45,9 @@ function isValidReservation(req, res, next) {
     message += "reservation_date is required. "
   if (
     !reservation.reservation_time ||
-    !/^([0-1][0-9]|2[0-3]):([0-5][0-9])$/.test(reservation.reservation_time)
+    !/^([0-1][0-9]|2[0-3]):([0-5][0-9])$/.test(
+      reservation.reservation_time.slice(0, 5)
+    )
   )
     message += "reservation_time is required. "
   if (!reservation.people || typeof reservation.people != "number")

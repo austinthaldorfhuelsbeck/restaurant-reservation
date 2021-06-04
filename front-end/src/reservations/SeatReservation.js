@@ -85,7 +85,7 @@ export default function SeatReservation() {
           <div className="col col-12 col-md-7 form-group">
             <label htmlFor="table_name">Table Number:</label>
             <select
-              name="table_name"
+              name="table_id"
               className="form-control"
               aria-label="Select Table Number"
               onChange={handleChange}
