@@ -46,7 +46,7 @@ export default function Table({ table, setRefresh = false }) {
             <span className="badge bg-danger text-light my-auto">
               <h5>
                 <FontAwesomeIcon icon={faTimes} className="mr-2" />
-                Occupied by #{table.reservation_id}
+                Occupied
               </h5>
             </span>
             <button
@@ -61,7 +61,7 @@ export default function Table({ table, setRefresh = false }) {
           <span className="badge bg-success text-light">
             <h5>
               <FontAwesomeIcon icon={faCheck} className="mr-2" />
-              Available
+              Free
             </h5>
           </span>
         )}

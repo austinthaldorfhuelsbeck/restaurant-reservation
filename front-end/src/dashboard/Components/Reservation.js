@@ -83,12 +83,12 @@ export default function Reservation({ reservation, setRefresh }) {
               <p data-reservation-id-status={reservation.reservation_id}>
                 {reservation.status === "booked" && (
                   <span title="Booked" className="text-muted">
-                    <FontAwesomeIcon icon={faClock} />
+                    <FontAwesomeIcon icon={faClock} /> booked
                   </span>
                 )}
                 {reservation.status === "seated" && (
                   <span title="Seated" className="text-success">
-                    <FontAwesomeIcon icon={faCheck} />
+                    <FontAwesomeIcon icon={faCheck} /> seated
                   </span>
                 )}
               </p>

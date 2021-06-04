@@ -67,7 +67,7 @@ export default function SeatReservation() {
   // Build tables list
   const tablesList = tables.map((table, index) => (
     <option key={index} value={table.table_id}>
-      {table.table_name} (Capacity: {table.capacity})
+      {table.table_name} - {table.capacity}
     </option>
   ))
 
