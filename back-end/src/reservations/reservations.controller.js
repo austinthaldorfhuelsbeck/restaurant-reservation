@@ -141,7 +141,7 @@ async function handleSearch(req, res, next) {
     if (data.length === 0) {
       return next({
         status: 400,
-        message: "no reservations found. ",
+        message: "No reservations found. ",
       })
     }
   }
