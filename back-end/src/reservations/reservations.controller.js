@@ -133,7 +133,7 @@ async function isCurrentlyFinished(req, res, next) {
     message: "reservation is",
   })
 }
-function handleSearch(req, res, next) {
+async function handleSearch(req, res, next) {
   const mobile_number = req.query.mobile_number
   if (mobile_number) {
     let data = []
